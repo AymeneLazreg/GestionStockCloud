@@ -1,0 +1,122 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\la200\\source\\repos\\GestStock\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{F721E8A9-17CB-030B-5634-EA6B4F1F48F3}|geststock.esproj|c:\\users\\la200\\source\\repos\\geststock\\src\\pages\\gestion\\historiqueproduit.jsx||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
+      "RelativeMoniker": "D:0:0:{F721E8A9-17CB-030B-5634-EA6B4F1F48F3}|geststock.esproj|solutionrelative:src\\pages\\gestion\\historiqueproduit.jsx||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F721E8A9-17CB-030B-5634-EA6B4F1F48F3}|geststock.esproj|c:\\users\\la200\\source\\repos\\geststock\\src\\pages\\gestion\\ajoutproduit.jsx||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
+      "RelativeMoniker": "D:0:0:{F721E8A9-17CB-030B-5634-EA6B4F1F48F3}|geststock.esproj|solutionrelative:src\\pages\\gestion\\ajoutproduit.jsx||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F721E8A9-17CB-030B-5634-EA6B4F1F48F3}|geststock.esproj|c:\\users\\la200\\source\\repos\\geststock\\src\\pages\\gestionnaire\\listeproduits.jsx||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
+      "RelativeMoniker": "D:0:0:{F721E8A9-17CB-030B-5634-EA6B4F1F48F3}|geststock.esproj|solutionrelative:src\\pages\\gestionnaire\\listeproduits.jsx||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F721E8A9-17CB-030B-5634-EA6B4F1F48F3}|geststock.esproj|c:\\users\\la200\\source\\repos\\geststock\\src\\pages\\auth\\profile.jsx||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
+      "RelativeMoniker": "D:0:0:{F721E8A9-17CB-030B-5634-EA6B4F1F48F3}|geststock.esproj|solutionrelative:src\\pages\\auth\\profile.jsx||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F721E8A9-17CB-030B-5634-EA6B4F1F48F3}|geststock.esproj|c:\\users\\la200\\source\\repos\\geststock\\src\\app.jsx||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
+      "RelativeMoniker": "D:0:0:{F721E8A9-17CB-030B-5634-EA6B4F1F48F3}|geststock.esproj|solutionrelative:src\\app.jsx||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F721E8A9-17CB-030B-5634-EA6B4F1F48F3}|geststock.esproj|c:\\users\\la200\\source\\repos\\geststock\\src\\pages\\gestion\\stock.jsx||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
+      "RelativeMoniker": "D:0:0:{F721E8A9-17CB-030B-5634-EA6B4F1F48F3}|geststock.esproj|solutionrelative:src\\pages\\gestion\\stock.jsx||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 0,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "HistoriqueProduit.jsx",
+              "DocumentMoniker": "C:\\Users\\la200\\source\\repos\\GestStock\\src\\pages\\gestion\\HistoriqueProduit.jsx",
+              "RelativeDocumentMoniker": "src\\pages\\gestion\\HistoriqueProduit.jsx",
+              "ToolTip": "C:\\Users\\la200\\source\\repos\\GestStock\\src\\pages\\gestion\\HistoriqueProduit.jsx",
+              "RelativeToolTip": "src\\pages\\gestion\\HistoriqueProduit.jsx",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABEAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003663|",
+              "WhenOpened": "2025-04-09T11:41:37.971Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "Profile.jsx",
+              "DocumentMoniker": "C:\\Users\\la200\\source\\repos\\GestStock\\src\\pages\\auth\\Profile.jsx",
+              "RelativeDocumentMoniker": "src\\pages\\auth\\Profile.jsx",
+              "ToolTip": "C:\\Users\\la200\\source\\repos\\GestStock\\src\\pages\\auth\\Profile.jsx",
+              "RelativeToolTip": "src\\pages\\auth\\Profile.jsx",
+              "ViewState": "AgIAALsAAAAAAAAAAAAAwNUAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003663|",
+              "WhenOpened": "2025-04-09T10:07:52.577Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "ListeProduits.jsx",
+              "DocumentMoniker": "C:\\Users\\la200\\source\\repos\\GestStock\\src\\pages\\gestionnaire\\ListeProduits.jsx",
+              "RelativeDocumentMoniker": "src\\pages\\gestionnaire\\ListeProduits.jsx",
+              "ToolTip": "C:\\Users\\la200\\source\\repos\\GestStock\\src\\pages\\gestionnaire\\ListeProduits.jsx",
+              "RelativeToolTip": "src\\pages\\gestionnaire\\ListeProduits.jsx",
+              "ViewState": "AgIAADsAAAAAAAAAAAAAwAwAAAATAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003663|",
+              "WhenOpened": "2025-04-09T10:04:32.088Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "AjoutProduit.jsx",
+              "DocumentMoniker": "C:\\Users\\la200\\source\\repos\\GestStock\\src\\pages\\gestion\\AjoutProduit.jsx",
+              "RelativeDocumentMoniker": "src\\pages\\gestion\\AjoutProduit.jsx",
+              "ToolTip": "C:\\Users\\la200\\source\\repos\\GestStock\\src\\pages\\gestion\\AjoutProduit.jsx",
+              "RelativeToolTip": "src\\pages\\gestion\\AjoutProduit.jsx",
+              "ViewState": "AgIAAC4AAAAAAAAAAAAUwDcAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003663|",
+              "WhenOpened": "2025-04-09T10:04:30.044Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "stock.jsx",
+              "DocumentMoniker": "C:\\Users\\la200\\source\\repos\\GestStock\\src\\pages\\gestion\\stock.jsx",
+              "RelativeDocumentMoniker": "src\\pages\\gestion\\stock.jsx",
+              "ToolTip": "C:\\Users\\la200\\source\\repos\\GestStock\\src\\pages\\gestion\\stock.jsx",
+              "RelativeToolTip": "src\\pages\\gestion\\stock.jsx",
+              "ViewState": "AgIAAAMAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003663|",
+              "WhenOpened": "2025-04-09T10:04:26.5Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "App.jsx",
+              "DocumentMoniker": "C:\\Users\\la200\\source\\repos\\GestStock\\src\\App.jsx",
+              "RelativeDocumentMoniker": "src\\App.jsx",
+              "ToolTip": "C:\\Users\\la200\\source\\repos\\GestStock\\src\\App.jsx",
+              "RelativeToolTip": "src\\App.jsx",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABIAAAAKAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003663|",
+              "WhenOpened": "2025-04-09T10:03:11.199Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

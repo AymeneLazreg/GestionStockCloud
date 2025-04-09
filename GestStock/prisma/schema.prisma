@@ -1,0 +1,14 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")  // Cette URL de connexion viendra du fichier .env
+}
+
+model User {
+  id       Int    @id @default(autoincrement())  // Clé primaire qui s'incrémente automatiquement
+  email    String @unique  // Email unique pour chaque utilisateur
+  mdp String  // Mot de passe stocké de manière sécurisée
+}
