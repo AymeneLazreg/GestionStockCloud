@@ -1,32 +1,60 @@
-import { Link } from "react-router-dom"
-import Header from "../../components/Header"
-import BarNavigation from "../../components/BarNavigation"
+import { Link } from "react-router-dom";
+import Header from "../../components/Header";
+import BarNavigation from "../../components/BarNavigation";
+import { useEffect, useState } from "react";
+import axios from "axios";
+import { useNotification } from "../../context/NotificationContext";
 
 function AccueilGestionnaire() {
-  const alertes = [
-    {
-      id: 1,
-      titre: "Entrepôt rempli à",
-      valeur: "85%",
-      icon: "📦",
-      couleur: "orange",
-    },
-    {
-      id: 2,
-      titre: "Rupture de stock sur",
-      valeur: "5 produits",
-      icon: "⚠️",
-      couleur: "red",
-    },
-    {
-      id: 3,
-      titre: "Stock bientôt épuisé",
-      valeur: "(>10 pcs)",
-      icon: "⚠️",
-      couleur: "yellow",
-      sousTitre: "3 produits",
-    },
-  ]
+  const [stats, setStats] = useState(null);
+  const { addNotification } = useNotification();
+
+  useEffect(() => {
+    const fetchStats = async () => {
+      try {
+        const res = await axios.get("http://localhost:8832/api/produits/stats");
+        setStats(res.data);
+
+        // ✅ Affiche la notif UNE SEULE FOIS PAR SESSION
+        const notified = sessionStorage.getItem("dashboardNotified");
+        if (!notified) {
+          addNotification("📊 Tableau de bord mis à jour avec succès !");
+          sessionStorage.setItem("dashboardNotified", "true");
+        }
+      } catch (err) {
+        console.error("Erreur récupération stats:", err);
+      }
+    };
+
+    fetchStats();
+  }, []);
+
+  const alertes = stats
+    ? [
+        {
+          id: 1,
+          titre: "Entrepôt rempli à",
+          valeur: `${stats.remplissage}%`,
+          icon: "📦",
+          couleur: "orange",
+        },
+        {
+          id: 2,
+          titre: "Rupture de stock sur",
+          valeur: `${stats.ruptureStock} produits`,
+          icon: "⚠️",
+          couleur: "red",
+        },
+        {
+          id: 3,
+          titre: "Stock bientôt épuisé",
+          valeur: "(>10 pcs)",
+          icon: "⚠️",
+          couleur: "yellow",
+          sousTitre: `${stats.bientotEpuise} produits`,
+        },
+      ]
+    : [];
 
   return (
     <>
@@ -45,6 +73,7 @@ function AccueilGestionnaire() {
               </div>
             </div>
           ))}
+          {!stats && <p>Chargement des données...</p>}
         </div>
       </div>
 
@@ -62,8 +91,7 @@ function AccueilGestionnaire() {
 
       <BarNavigation />
     </>
-  )
+  );
 }
 
-export default AccueilGestionnaire
-
+export default AccueilGestionnaire;

@@ -1,4 +1,5 @@
 import Produit from '../models/produit.model.js';
+import Mouvement from '../models/mouvement.model.js';
 
 // GET all
 export const getProduits = async (req, res) => {
@@ -57,3 +58,5 @@ export const deleteProduit = async (req, res) => {
   await produit.destroy();
   res.json({ message: 'Supprimé' });
 };
+
+

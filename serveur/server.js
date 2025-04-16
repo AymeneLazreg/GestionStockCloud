@@ -6,6 +6,7 @@ import userRoutes from './routes/user.route.js'; // 👈 Ajout de la route utili
 import sequelize from './config/db.js';
 import produitRoutes from './routes/produit.route.js'
 import categorieRoutes from './routes/categorie.route.js'
+import mouvementRoutes from './routes/mouvement.route.js';
 
 
 
@@ -25,7 +26,7 @@ app.use('/api/auth', authRoutes);
 app.use('/api/user', userRoutes); // 👈 Route pour les infos de profil
 app.use('/api/produits', produitRoutes)
 app.use('/api/categories', categorieRoutes)
-
+app.use('/api/mouvements', mouvementRoutes);
 
 const PORT = process.env.PORT || 8832;
 
