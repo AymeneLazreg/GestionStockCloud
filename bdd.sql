@@ -12,9 +12,29 @@
  Target Server Version : 170003 (170003)
  File Encoding         : 65001
 
- Date: 09/04/2025 13:49:06
+ Date: 16/04/2025 19:19:17
 */
 
+
+-- ----------------------------
+-- Type structure for enum_mouvement_action
+-- ----------------------------
+DROP TYPE IF EXISTS "public"."enum_mouvement_action";
+CREATE TYPE "public"."enum_mouvement_action" AS ENUM (
+  'Entrée',
+  'Sortie'
+);
+
+-- ----------------------------
+-- Sequence structure for mouvement_id_seq
+-- ----------------------------
+DROP SEQUENCE IF EXISTS "public"."mouvement_id_seq";
+CREATE SEQUENCE "public"."mouvement_id_seq" 
+INCREMENT 1
+MINVALUE  1
+MAXVALUE 2147483647
+START 1
+CACHE 1;
 
 -- ----------------------------
 -- Sequence structure for produit_id_seq
@@ -105,24 +125,6 @@ CREATE TABLE "public"."LigneCommandeFournisseur" (
 -- ----------------------------
 
 -- ----------------------------
--- Table structure for StockMouvement
--- ----------------------------
-DROP TABLE IF EXISTS "public"."StockMouvement";
-CREATE TABLE "public"."StockMouvement" (
-  "id" int4 NOT NULL,
-  "type_mouvement" varchar(255) COLLATE "pg_catalog"."default" NOT NULL,
-  "produit" int4 NOT NULL,
-  "quantite" varchar(255) COLLATE "pg_catalog"."default" NOT NULL,
-  "date" date NOT NULL,
-  "utilisateur" int4 NOT NULL
-)
-;
-
--- ----------------------------
--- Records of StockMouvement
--- ----------------------------
-
--- ----------------------------
 -- Table structure for categorie
 -- ----------------------------
 DROP TABLE IF EXISTS "public"."categorie";
@@ -137,6 +139,8 @@ CREATE TABLE "public"."categorie" (
 -- Records of categorie
 -- ----------------------------
 INSERT INTO "public"."categorie" VALUES (1, 'Alimentaire', 'H');
+INSERT INTO "public"."categorie" VALUES (2, 'Fruits', 'Fr');
+INSERT INTO "public"."categorie" VALUES (3, 'Legumes', 'lg');
 
 -- ----------------------------
 -- Table structure for client
@@ -207,6 +211,38 @@ CREATE TABLE "public"."fournisseur" (
 -- ----------------------------
 
 -- ----------------------------
+-- Table structure for mouvement
+-- ----------------------------
+DROP TABLE IF EXISTS "public"."mouvement";
+CREATE TABLE "public"."mouvement" (
+  "id" int4 NOT NULL DEFAULT nextval('mouvement_id_seq'::regclass),
+  "produit" varchar(255) COLLATE "pg_catalog"."default" NOT NULL,
+  "action" "public"."enum_mouvement_action" NOT NULL,
+  "quantite" int4 NOT NULL,
+  "date" date NOT NULL,
+  "utilisateur_id" int4
+)
+;
+
+-- ----------------------------
+-- Records of mouvement
+-- ----------------------------
+INSERT INTO "public"."mouvement" VALUES (13, 'Nazim', 'Sortie', 10, '2025-04-10', 5);
+INSERT INTO "public"."mouvement" VALUES (15, 'Banane', 'Entrée', 10, '2025-04-10', 5);
+INSERT INTO "public"."mouvement" VALUES (20, 'Yaourt', 'Entrée', 15, '2025-04-10', 5);
+INSERT INTO "public"."mouvement" VALUES (22, 'Yaourt', 'Sortie', 49, '2025-04-10', 5);
+INSERT INTO "public"."mouvement" VALUES (23, 'Yaourt', 'Entrée', 18, '2025-04-10', 5);
+INSERT INTO "public"."mouvement" VALUES (24, 'Patate', 'Sortie', 12, '2025-04-10', 5);
+INSERT INTO "public"."mouvement" VALUES (25, 'Jus', 'Entrée', 30, '2025-04-10', 5);
+INSERT INTO "public"."mouvement" VALUES (26, 'fromage', 'Sortie', 25, '2025-04-10', 5);
+INSERT INTO "public"."mouvement" VALUES (27, 'Chocolat', 'Sortie', 30, '2025-04-10', 5);
+INSERT INTO "public"."mouvement" VALUES (28, 'Conserve Poisson', 'Entrée', 3, '2025-04-16', 5);
+INSERT INTO "public"."mouvement" VALUES (33, 'Nv produit', 'Entrée', 44, '2025-04-16', 5);
+INSERT INTO "public"."mouvement" VALUES (34, 'Jus', 'Entrée', 5, '2025-04-16', 6);
+INSERT INTO "public"."mouvement" VALUES (35, 'azf', 'Entrée', 3, '2025-04-16', 6);
+INSERT INTO "public"."mouvement" VALUES (36, 'Cable', 'Entrée', 44, '2025-04-16', 6);
+
+-- ----------------------------
 -- Table structure for paiement
 -- ----------------------------
 DROP TABLE IF EXISTS "public"."paiement";
@@ -246,8 +282,27 @@ CACHE 1
 -- ----------------------------
 -- Records of produit
 -- ----------------------------
-INSERT INTO "public"."produit" VALUES (1, 'Patate', 'jkhqlzdsuiflqisudhfl', 45, 55, 1);
-INSERT INTO "public"."produit" VALUES (2, 'Banane', 'Fruits sec', 40, 14, 1);
+INSERT INTO "public"."produit" VALUES (3, 'Farine', 'batata', 5, 5, 1);
+INSERT INTO "public"."produit" VALUES (7, 'chocolat', 'noir', 1.45, 6, 1);
+INSERT INTO "public"."produit" VALUES (8, 'eau', 'bouteilles', 11, 40, 1);
+INSERT INTO "public"."produit" VALUES (11, 'Lait', 'Entier', 3, 20, 1);
+INSERT INTO "public"."produit" VALUES (12, 'levure', 'levure chimique', 1, 25, 1);
+INSERT INTO "public"."produit" VALUES (4, 'Yaourt', 'qposjidpfoiqjs', 55, 18, 1);
+INSERT INTO "public"."produit" VALUES (1, 'Patate', 'jkhqlzdsuiflqisudhfl', 44, 13, 1);
+INSERT INTO "public"."produit" VALUES (10, 'fromage', 'camemeber', 14, 5, 1);
+INSERT INTO "public"."produit" VALUES (9, 'Chocolat', 'Blanc', 10, 0, 1);
+INSERT INTO "public"."produit" VALUES (14, 'Pomme de terre', 'legume', 45.6, 30, 1);
+INSERT INTO "public"."produit" VALUES (5, 'Banane', 'oqijsdfpoijq', 45, 10, 1);
+INSERT INTO "public"."produit" VALUES (2, 'Carottes', 'Fruits sec', 40, 13, 1);
+INSERT INTO "public"."produit" VALUES (6, 'Conserve Poisson', 'zdazad', 3, 33, 1);
+INSERT INTO "public"."produit" VALUES (15, 'EE', 'EE', 33, 4, 1);
+INSERT INTO "public"."produit" VALUES (16, 'EE', 'EE', 33, 4, 1);
+INSERT INTO "public"."produit" VALUES (17, 'EE', 'EE', 33, 4, 1);
+INSERT INTO "public"."produit" VALUES (18, 'EE', 'EE', 33, 4, 1);
+INSERT INTO "public"."produit" VALUES (19, 'Nv produit', 'Aymene l''a ajouté T', 3, 44, 1);
+INSERT INTO "public"."produit" VALUES (13, 'Jus', 'Jus naturel d''orange', 4.5, 35, 1);
+INSERT INTO "public"."produit" VALUES (20, 'azf', '²EFQ', 33, 3, 1);
+INSERT INTO "public"."produit" VALUES (21, 'Cable', 'qiojsdmfoi', 6587, 44, 1);
 
 -- ----------------------------
 -- Table structure for utilisateur
@@ -282,21 +337,29 @@ CREATE TABLE "public"."utilisateurs" (
 -- ----------------------------
 -- Records of utilisateurs
 -- ----------------------------
-INSERT INTO "public"."utilisateurs" VALUES (1, 'Aymene Lazreg', 'Aymenla@gmail.com', '$2b$10$oDfm.EhqM59n1lkTtCBwIeV7OeMUsmofSNvZgROJGkl2S9DAtXLYe', 'utilisateur');
+INSERT INTO "public"."utilisateurs" VALUES (5, 'aymene LAZREG', 'aymenlazreg4@gmail.com', '$2b$10$DdWyx2VQmtD8WyqRrtRyPOstBN3YuxRjaHLsvltCfx9OBMmcX434K', 'utilisateur');
+INSERT INTO "public"."utilisateurs" VALUES (6, 'Yanis Dahmouche', 'yanischkopi@gmail.com', '$2b$10$nhADOJaakECYRumd1h6RF.8L.wighIr8jaGJPXPzK/qGhLgZlxm6G', 'utilisateur');
+
+-- ----------------------------
+-- Alter sequences owned by
+-- ----------------------------
+ALTER SEQUENCE "public"."mouvement_id_seq"
+OWNED BY "public"."mouvement"."id";
+SELECT setval('"public"."mouvement_id_seq"', 36, true);
 
 -- ----------------------------
 -- Alter sequences owned by
 -- ----------------------------
 ALTER SEQUENCE "public"."produit_id_seq"
 OWNED BY "public"."produit"."id";
-SELECT setval('"public"."produit_id_seq"', 2, true);
+SELECT setval('"public"."produit_id_seq"', 21, true);
 
 -- ----------------------------
 -- Alter sequences owned by
 -- ----------------------------
 ALTER SEQUENCE "public"."utilisateurs_id_seq"
 OWNED BY "public"."utilisateurs"."id";
-SELECT setval('"public"."utilisateurs_id_seq"', 1, true);
+SELECT setval('"public"."utilisateurs_id_seq"', 6, true);
 
 -- ----------------------------
 -- Primary Key structure for table CartonProduit
@@ -322,16 +385,6 @@ ALTER TABLE "public"."LigneCommandeClient" ADD CONSTRAINT "LigneCommandeClient_p
 -- Primary Key structure for table LigneCommandeFournisseur
 -- ----------------------------
 ALTER TABLE "public"."LigneCommandeFournisseur" ADD CONSTRAINT "LigneCommandeFournisseur_pkey" PRIMARY KEY ("id");
-
--- ----------------------------
--- Checks structure for table StockMouvement
--- ----------------------------
-ALTER TABLE "public"."StockMouvement" ADD CONSTRAINT "chk_type" CHECK (type_mouvement::text = ANY (ARRAY['Entree'::character varying::text, 'Sortie'::character varying::text, 'Ajustement'::character varying::text]));
-
--- ----------------------------
--- Primary Key structure for table StockMouvement
--- ----------------------------
-ALTER TABLE "public"."StockMouvement" ADD CONSTRAINT "StockMouvement_pkey" PRIMARY KEY ("id");
 
 -- ----------------------------
 -- Primary Key structure for table categorie
@@ -369,6 +422,11 @@ ALTER TABLE "public"."facture" ADD CONSTRAINT "facture_pkey" PRIMARY KEY ("id");
 ALTER TABLE "public"."fournisseur" ADD CONSTRAINT "fournisseur_pkey" PRIMARY KEY ("id");
 
 -- ----------------------------
+-- Primary Key structure for table mouvement
+-- ----------------------------
+ALTER TABLE "public"."mouvement" ADD CONSTRAINT "mouvement_pkey" PRIMARY KEY ("id");
+
+-- ----------------------------
 -- Checks structure for table paiement
 -- ----------------------------
 ALTER TABLE "public"."paiement" ADD CONSTRAINT "chk_payement" CHECK (mode_paiement::text = ANY (ARRAY['Carte'::character varying::text, 'Especes'::character varying::text, 'Virement'::character varying::text]));
@@ -381,7 +439,7 @@ ALTER TABLE "public"."paiement" ADD CONSTRAINT "paiement_pkey" PRIMARY KEY ("id"
 -- ----------------------------
 -- Auto increment value for produit
 -- ----------------------------
-SELECT setval('"public"."produit_id_seq"', 2, true);
+SELECT setval('"public"."produit_id_seq"', 21, true);
 
 -- ----------------------------
 -- Primary Key structure for table produit
@@ -426,12 +484,6 @@ ALTER TABLE "public"."LigneCommandeFournisseur" ADD CONSTRAINT "commande" FOREIG
 ALTER TABLE "public"."LigneCommandeFournisseur" ADD CONSTRAINT "produits" FOREIGN KEY ("produit") REFERENCES "public"."produit" ("id") ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 -- ----------------------------
--- Foreign Keys structure for table StockMouvement
--- ----------------------------
-ALTER TABLE "public"."StockMouvement" ADD CONSTRAINT "Utils" FOREIGN KEY ("utilisateur") REFERENCES "public"."utilisateur" ("id") ON DELETE NO ACTION ON UPDATE NO ACTION;
-ALTER TABLE "public"."StockMouvement" ADD CONSTRAINT "prod" FOREIGN KEY ("produit") REFERENCES "public"."produit" ("id") ON DELETE NO ACTION ON UPDATE NO ACTION;
-
--- ----------------------------
 -- Foreign Keys structure for table commandeFournisseur
 -- ----------------------------
 ALTER TABLE "public"."commandeFournisseur" ADD CONSTRAINT "fournisseur" FOREIGN KEY ("fournisseur") REFERENCES "public"."fournisseur" ("id") ON DELETE NO ACTION ON UPDATE NO ACTION;
@@ -440,6 +492,11 @@ ALTER TABLE "public"."commandeFournisseur" ADD CONSTRAINT "fournisseur" FOREIGN 
 -- Foreign Keys structure for table facture
 -- ----------------------------
 ALTER TABLE "public"."facture" ADD CONSTRAINT "commande" FOREIGN KEY ("commande_client") REFERENCES "public"."commandeFournisseur" ("id") ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+-- ----------------------------
+-- Foreign Keys structure for table mouvement
+-- ----------------------------
+ALTER TABLE "public"."mouvement" ADD CONSTRAINT "fk_utilisateur" FOREIGN KEY ("utilisateur_id") REFERENCES "public"."utilisateurs" ("id") ON DELETE SET NULL ON UPDATE NO ACTION;
 
 -- ----------------------------
 -- Foreign Keys structure for table paiement
