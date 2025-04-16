@@ -61,6 +61,8 @@ function AjoutProduit() {
     }
 
     try {
+      console.log("🔐 Token envoyé au backend :", token);
+
       const res = await fetch("http://localhost:8832/api/produits", {
         method: "POST",
         headers: {
