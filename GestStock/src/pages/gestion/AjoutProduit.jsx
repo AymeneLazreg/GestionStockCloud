@@ -4,6 +4,13 @@ import Header from "../../components/Header"
 import BarNavigation from "../../components/BarNavigation"
 import { useNotification } from "../../context/NotificationContext" // ✅ Import
 
+
+const token = localStorage.getItem("token");
+console.log("Token récupéré :", token); // Vérifie si le token existe
+
+
+
+
 function AjoutProduit() {
   const navigate = useNavigate()
   const { addNotification } = useNotification(); // ✅ Hook
@@ -43,6 +50,7 @@ function AjoutProduit() {
 
   const handleSubmit = async (e) => {
     e.preventDefault()
+    
 
     const newProduit = {
       nom: produit.nom,
@@ -57,6 +65,7 @@ function AjoutProduit() {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`, // ✅ Ajout du token
         },
         body: JSON.stringify(newProduit),
       })
@@ -69,8 +78,11 @@ function AjoutProduit() {
       navigate("/stock")
     } catch (err) {
       console.error(err)
+      console.log("newProduit : ", newProduit)
       addNotification("❌ Erreur lors de l'ajout du produit !")
     }
+
+    
   }
 
   const handleCancel = () => {

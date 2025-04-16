@@ -10,6 +10,7 @@ function ModifierProduit() {
   const { addNotification } = useNotification();
   const [produit, setProduit] = useState(null);
   const [newQuantite, setNewQuantite] = useState("");
+  const [loading, setLoading] = useState(true); // Ajout du loading pour l'affichage du produit
 
   useEffect(() => {
     const fetchProduit = async () => {
@@ -19,15 +20,16 @@ function ModifierProduit() {
         const data = await res.json();
         setProduit(data);
         setNewQuantite(data.quantite_stock);
+        setLoading(false); // Fin du chargement
       } catch (err) {
-        console.error(err);
+        console.error("Erreur chargement produit:", err);
         addNotification("❌ Erreur de chargement du produit");
+        setLoading(false);
       }
     };
-  
+
     fetchProduit();
   }, [id, addNotification]);
-  
 
   const handleChange = (e) => {
     setNewQuantite(e.target.value);
@@ -36,26 +38,48 @@ function ModifierProduit() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     const updatedStock = parseInt(newQuantite);
-    if (isNaN(updatedStock)) {
-      addNotification("❌ Veuillez saisir une quantité valide");
+
+    if (isNaN(updatedStock) || updatedStock < 0) { // Ajout vérification pour valeur négative
+      addNotification("❌ Veuillez saisir une quantité valide (positive)");
       return;
     }
+
     if (produit.quantite_stock === updatedStock) {
       addNotification("Aucun changement de quantité détecté");
       return;
     }
+
     try {
-      const res = await fetch(`http://localhost:8832/api/produits/${id}`, {
-        method: "PUT",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ quantite_stock: updatedStock }),
-      });
-      if (!res.ok) throw new Error("Erreur lors de la modification du produit");
+      const token = localStorage.getItem("token");
+      if (!token) {
+        addNotification("❌ Utilisateur non authentifié");
+        return;
+      }
+
+      
+        const res = await fetch(`http://localhost:8832/api/produits/${id}`, {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`, // Assurez-vous que le token est envoyé
+          },
+          body: JSON.stringify({ quantite_stock: updatedStock }),
+        });
+
+      if (!res.ok) {
+        if (res.status === 401) {
+          throw new Error("Non autorisé");
+        } else if (res.status === 403) {
+          throw new Error("Accès interdit");
+        } else {
+          throw new Error("Erreur lors de la modification du produit");
+        }
+      }
 
       addNotification("✅ Produit modifié avec succès !");
       navigate("/stock");
     } catch (err) {
-      console.error(err);
+      console.error("Erreur modification produit:", err);
       addNotification("❌ Erreur lors de la modification du produit");
     }
   };
@@ -63,6 +87,10 @@ function ModifierProduit() {
   const handleCancel = () => {
     navigate("/stock");
   };
+
+  if (loading) {
+    return <div>Chargement...</div>; // Indication de chargement
+  }
 
   return (
     <>
@@ -76,7 +104,13 @@ function ModifierProduit() {
             </div>
             <div className="form-group">
               <label htmlFor="description">Description</label>
-              <textarea id="description" name="description" value={produit.description} disabled rows="3"></textarea>
+              <textarea
+                id="description"
+                name="description"
+                value={produit.description}
+                disabled
+                rows="3"
+              ></textarea>
             </div>
             <div className="form-group">
               <label htmlFor="quantite_stock">Quantité en stock</label>
@@ -96,7 +130,7 @@ function ModifierProduit() {
             </div>
           </form>
         ) : (
-          <p>Chargement...</p>
+          <p>Produit non trouvé</p> // Affichage message produit introuvable
         )}
       </div>
       <BarNavigation />

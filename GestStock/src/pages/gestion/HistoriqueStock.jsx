@@ -4,7 +4,7 @@ import Header from "../../components/Header";
 import BarNavigation from "../../components/BarNavigation";
 import axios from "axios";
 import jsPDF from "jspdf";
-import autoTable from "jspdf-autotable"; // ✅ Import correct
+import autoTable from "jspdf-autotable";
 
 function HistoriqueStock() {
   const [historique, setHistorique] = useState([]);
@@ -38,32 +38,31 @@ function HistoriqueStock() {
   const exportPDF = () => {
     console.log("📥 Export PDF lancé !");
     const doc = new jsPDF();
-  
+
     doc.text("Historique des mouvements de stock", 14, 15);
-  
+
     const tableData = historique.map((item) => {
-      // Si l'action est "Entrée", on ajoute un "+" à la quantité
-      const quantityText = item.action === "Entrée" ? `+${item.quantite}` : `-${item.quantite}`;
-      
+      const isPositive = item.action === "Entrée";
+      const quantityText = isPositive ? `+${item.quantite}` : `-${item.quantite}`;
+      const utilisateur = item.utilisateur?.nom || "—";
+
       return [
         item.date,
         item.produit,
         item.action,
-        quantityText,  // Quantité avec + ou - selon l'action
+        quantityText,
+        utilisateur,
       ];
     });
-  
-    console.log("📊 Données du tableau pour le PDF :", tableData);
-  
+
     autoTable(doc, {
-      head: [["Date", "Produit", "Action", "Quantité"]],
+      head: [["Date", "Produit", "Action", "Quantité", "Utilisateur"]],
       body: tableData,
       startY: 20,
     });
-  
+
     doc.save("historique-stock.pdf");
   };
-  
 
   return (
     <>
@@ -95,40 +94,32 @@ function HistoriqueStock() {
         </div>
 
         <div className="historique-container">
-  <div className="historique-header">
-    <div className="historique-cell">Date</div>
-    <div className="historique-cell">Produit</div>
-    <div className="historique-cell">Action</div>
-    <div className="historique-cell">Quantité</div>
-  </div>
+          <div className="historique-header">
+            <div className="historique-cell">Date</div>
+            <div className="historique-cell">Produit</div>
+            <div className="historique-cell">Action</div>
+            <div className="historique-cell">Quantité</div>
+            <div className="historique-cell">Utilisateur</div>
+          </div>
 
-  {historique.map((item, index) => {
-    // Déterminez si la quantité doit être positive (Entrée) ou négative (Sortie)
-    const isPositive = item.action === "Entrée"; // Si action est Entrée, c'est positif
-    const quantityText = isPositive ? `+${item.quantite}` : `-${item.quantite}`;
-    const quantityClass = isPositive ? "positive" : "negative";
+          {historique.map((item, index) => {
+            const isPositive = item.action === "Entrée";
+            const quantityText = isPositive ? `+${item.quantite}` : `-${item.quantite}`;
+            const quantityClass = isPositive ? "positive" : "negative";
 
-    return (
-      <div
-        key={index}
-        className="historique-row"
-        
-      >
-        <div className="historique-cell">{item.date}</div>
-        <div className="historique-cell">{item.produit}</div>
-        <div className="historique-cell">{item.action}</div>
-        <div className="historique-cell">
-          <span className={quantityClass}>
-            {quantityText}
-          </span>
+            return (
+              <div key={index} className="historique-row">
+                <div className="historique-cell">{item.date}</div>
+                <div className="historique-cell">{item.produit}</div>
+                <div className="historique-cell">{item.action}</div>
+                <div className="historique-cell">
+                  <span className={quantityClass}>{quantityText}</span>
+                </div>
+                <div className="historique-cell">{item.utilisateur?.nom || "—"}</div>
+              </div>
+            );
+          })}
         </div>
-      </div>
-    );
-  })}
-</div>
-        
-
-
       </div>
 
       <div className="action-buttons">
