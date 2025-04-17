@@ -98,37 +98,48 @@ function ModifierProduit() {
       <div className="body">
         {produit ? (
           <form onSubmit={handleSubmit} className="product-form">
-            <div className="form-group">
-              <label htmlFor="nom">Nom du produit</label>
-              <input type="text" id="nom" name="nom" value={produit.nom} disabled />
-            </div>
-            <div className="form-group">
-              <label htmlFor="description">Description</label>
-              <textarea
-                id="description"
-                name="description"
-                value={produit.description}
-                disabled
-                rows="3"
-              ></textarea>
-            </div>
-            <div className="form-group">
-              <label htmlFor="quantite_stock">Quantité en stock</label>
-              <input
-                type="number"
-                id="quantite_stock"
-                name="quantite_stock"
-                value={newQuantite}
-                onChange={handleChange}
-                min="0"
-                required
-              />
-            </div>
-            <div className="form-buttons">
-              <button type="submit" className="btn submit-btn">Modifier</button>
-              <button type="button" className="btn cancel-btn" onClick={handleCancel}>Annuler</button>
-            </div>
-          </form>
+          <div className="form-group">
+            <label htmlFor="nom">Nom du produit</label>
+            <input type="text" id="nom" name="nom" value={produit.nom} disabled />
+          </div>
+          <div className="form-group">
+            <label htmlFor="description">Description</label>
+            <textarea
+              id="description"
+              name="description"
+              value={produit.description}
+              disabled
+              rows="3"
+            ></textarea>
+          </div>
+          <div className="form-group">
+            <label htmlFor="codebar">Code-barres</label>
+            <input
+              type="text"
+              id="codebar"
+              name="codebar"
+              value={produit.codebar}
+              disabled
+            />
+          </div>
+          <div className="form-group">
+            <label htmlFor="quantite_stock">Quantité en stock</label>
+            <input
+              type="number"
+              id="quantite_stock"
+              name="quantite_stock"
+              value={newQuantite}
+              onChange={handleChange}
+              min="0"
+              required
+            />
+          </div>
+          <div className="form-buttons">
+            <button type="submit" className="btn submit-btn">Modifier</button>
+            <button type="button" className="btn cancel-btn" onClick={handleCancel}>Annuler</button>
+          </div>
+        </form>
+        
         ) : (
           <p>Produit non trouvé</p> // Affichage message produit introuvable
         )}

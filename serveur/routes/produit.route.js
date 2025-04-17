@@ -6,10 +6,10 @@ const router = express.Router();
 
 
 
-// ✅ Route POST : créer un produit + mouvement "Entrée"
+// Route POST : créer un produit + mouvement "Entrée"
 router.post("/", authenticateToken, async (req, res) => {
   try {
-    const { nom, description, prix, quantite_stock, categorie } = req.body;
+    const { nom, description, prix, quantite_stock, categorie, codebar } = req.body;
     const userId = req.user.id; // Utilisateur connecté
 
     // Vérifier si les données sont valides
@@ -22,6 +22,7 @@ router.post("/", authenticateToken, async (req, res) => {
       prix,
       quantite_stock,
       categorie,
+      codebar, // Ajout de codebar
     });
     console.log("Produit créé :", nouveauProduit);
 
@@ -46,6 +47,7 @@ router.post("/", authenticateToken, async (req, res) => {
     res.status(500).json({ message: "Erreur serveur", error: error.message });
   }
 });
+
 
 
 // ✅ Route GET : récupérer tous les produits

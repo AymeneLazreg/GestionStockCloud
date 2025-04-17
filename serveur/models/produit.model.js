@@ -1,6 +1,6 @@
-import { DataTypes } from 'sequelize'
-import sequelize from '../config/db.js'
-import Categorie from './categorie.model.js'
+import { DataTypes } from 'sequelize';
+import sequelize from '../config/db.js';
+import Categorie from './categorie.model.js';
 
 const Produit = sequelize.define('produit', {
   id: {
@@ -10,38 +10,42 @@ const Produit = sequelize.define('produit', {
   },
   nom: {
     type: DataTypes.STRING,
-    allowNull: false
+    allowNull: false,
   },
   description: {
     type: DataTypes.STRING,
-    allowNull: true
+    allowNull: true,
   },
   prix: {
     type: DataTypes.FLOAT,
-    allowNull: false
+    allowNull: false,
   },
   quantite_stock: {
     type: DataTypes.INTEGER,
-    allowNull: false
+    allowNull: false,
   },
-  categorie: { // clé étrangère personnalisée
+  codebar: { // Nouvelle colonne codebar
+    type: DataTypes.STRING,
+    allowNull: true, // Ou false si le code-barre est obligatoire
+  },
+  categorie: { // Clé étrangère personnalisée
     type: DataTypes.INTEGER,
-    allowNull: false
-  }
+    allowNull: false,
+  },
 }, {
   tableName: 'produit',
-  timestamps: false
-})
+  timestamps: false,
+});
 
 // Associations
 Produit.belongsTo(Categorie, {
   foreignKey: 'categorie',
-  as: 'categorieAssoc' // alias pour éviter les conflits de nom
-})
+  as: 'categorieAssoc', // alias pour éviter les conflits de nom
+});
 
 Categorie.hasMany(Produit, {
   foreignKey: 'categorie',
-  as: 'produits'
-})
+  as: 'produits',
+});
 
-export default Produit
+export default Produit;

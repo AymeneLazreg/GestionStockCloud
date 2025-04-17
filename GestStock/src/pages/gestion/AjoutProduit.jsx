@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom"
 import Header from "../../components/Header"
 import BarNavigation from "../../components/BarNavigation"
 import { useNotification } from "../../context/NotificationContext" // ✅ Import
+import BarcodeScanner from '../../Scanner' // Import du scanner de code-barres;
 
 
 const token = localStorage.getItem("token");
@@ -21,7 +22,8 @@ function AjoutProduit() {
     prix: "",
     quantite: "",
     categorie: "",
-  })
+    codebar: "", // Ajout de l'état codebar
+  });
 
   useEffect(() => {
     const fetchCategories = async () => {
@@ -48,6 +50,11 @@ function AjoutProduit() {
     }))
   }
 
+    // Met à jour le codebar avec la valeur scannée
+    const handleBarcodeScan = (scannedCode) => {
+      setProduit((prev) => ({ ...prev, codebar: scannedCode }));
+    };
+
   const handleSubmit = async (e) => {
     e.preventDefault()
     
@@ -58,7 +65,8 @@ function AjoutProduit() {
       prix: parseFloat(produit.prix),
       quantite_stock: parseInt(produit.quantite),
       categorie: parseInt(produit.categorie),
-    }
+      codebar: produit.codebar, // Envoie le codebar avec les autres informations
+    };
 
     try {
       console.log("🔐 Token envoyé au backend :", token);
@@ -116,6 +124,7 @@ function AjoutProduit() {
               <input type="number" id="quantite" name="quantite" value={produit.quantite} onChange={handleChange} min="0" required />
             </div>
           </div>
+          
 
           <div className="form-group">
             <label htmlFor="categorie">Catégorie</label>
@@ -125,7 +134,9 @@ function AjoutProduit() {
               ))}
             </select>
           </div>
-
+          <div>
+            <BarcodeScanner value={produit.codebar} onScan={handleBarcodeScan} />
+          </div>
           <div className="form-buttons">
             <button type="submit" className="btn submit-btn">Ajouter</button>
             <button type="button" className="btn cancel-btn" onClick={handleCancel}>Annuler</button>
