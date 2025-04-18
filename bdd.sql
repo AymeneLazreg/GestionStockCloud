@@ -12,7 +12,7 @@
  Target Server Version : 170003 (170003)
  File Encoding         : 65001
 
- Date: 16/04/2025 19:19:17
+ Date: 18/04/2025 14:57:09
 */
 
 
@@ -24,6 +24,50 @@ CREATE TYPE "public"."enum_mouvement_action" AS ENUM (
   'Entrée',
   'Sortie'
 );
+
+-- ----------------------------
+-- Sequence structure for CommandeFournisseurs_id_seq
+-- ----------------------------
+DROP SEQUENCE IF EXISTS "public"."CommandeFournisseurs_id_seq";
+CREATE SEQUENCE "public"."CommandeFournisseurs_id_seq" 
+INCREMENT 1
+MINVALUE  1
+MAXVALUE 9223372036854775807
+START 1
+CACHE 1;
+
+-- ----------------------------
+-- Sequence structure for LigneCommandeFournisseur_id_seq
+-- ----------------------------
+DROP SEQUENCE IF EXISTS "public"."LigneCommandeFournisseur_id_seq";
+CREATE SEQUENCE "public"."LigneCommandeFournisseur_id_seq" 
+INCREMENT 1
+MINVALUE  1
+MAXVALUE 9223372036854775807
+START 1
+CACHE 1;
+
+-- ----------------------------
+-- Sequence structure for commandes_fournisseur_id_seq
+-- ----------------------------
+DROP SEQUENCE IF EXISTS "public"."commandes_fournisseur_id_seq";
+CREATE SEQUENCE "public"."commandes_fournisseur_id_seq" 
+INCREMENT 1
+MINVALUE  1
+MAXVALUE 2147483647
+START 1
+CACHE 1;
+
+-- ----------------------------
+-- Sequence structure for lignes_commande_fournisseur_id_seq
+-- ----------------------------
+DROP SEQUENCE IF EXISTS "public"."lignes_commande_fournisseur_id_seq";
+CREATE SEQUENCE "public"."lignes_commande_fournisseur_id_seq" 
+INCREMENT 1
+MINVALUE  1
+MAXVALUE 2147483647
+START 1
+CACHE 1;
 
 -- ----------------------------
 -- Sequence structure for mouvement_id_seq
@@ -41,6 +85,17 @@ CACHE 1;
 -- ----------------------------
 DROP SEQUENCE IF EXISTS "public"."produit_id_seq";
 CREATE SEQUENCE "public"."produit_id_seq" 
+INCREMENT 1
+MINVALUE  1
+MAXVALUE 2147483647
+START 1
+CACHE 1;
+
+-- ----------------------------
+-- Sequence structure for produit_id_seq1
+-- ----------------------------
+DROP SEQUENCE IF EXISTS "public"."produit_id_seq1";
+CREATE SEQUENCE "public"."produit_id_seq1" 
 INCREMENT 1
 MINVALUE  1
 MAXVALUE 2147483647
@@ -71,57 +126,6 @@ CREATE TABLE "public"."CartonProduit" (
 
 -- ----------------------------
 -- Records of CartonProduit
--- ----------------------------
-
--- ----------------------------
--- Table structure for CommandesClient
--- ----------------------------
-DROP TABLE IF EXISTS "public"."CommandesClient";
-CREATE TABLE "public"."CommandesClient" (
-  "id" int4 NOT NULL,
-  "date_commande" date,
-  "statut" varchar(255) COLLATE "pg_catalog"."default",
-  "montant_totale" float4,
-  "client" int4
-)
-;
-
--- ----------------------------
--- Records of CommandesClient
--- ----------------------------
-
--- ----------------------------
--- Table structure for LigneCommandeClient
--- ----------------------------
-DROP TABLE IF EXISTS "public"."LigneCommandeClient";
-CREATE TABLE "public"."LigneCommandeClient" (
-  "id" int4 NOT NULL,
-  "produit" int4 NOT NULL,
-  "quantite" int4 NOT NULL,
-  "prix_unitaire" float4 NOT NULL,
-  "commande" int4 NOT NULL
-)
-;
-
--- ----------------------------
--- Records of LigneCommandeClient
--- ----------------------------
-
--- ----------------------------
--- Table structure for LigneCommandeFournisseur
--- ----------------------------
-DROP TABLE IF EXISTS "public"."LigneCommandeFournisseur";
-CREATE TABLE "public"."LigneCommandeFournisseur" (
-  "id" int4 NOT NULL,
-  "produit" int4 NOT NULL,
-  "quantité" int4 NOT NULL,
-  "prix_unitaire" float4 NOT NULL,
-  "commande" int4 NOT NULL
-)
-;
-
--- ----------------------------
--- Records of LigneCommandeFournisseur
 -- ----------------------------
 
 -- ----------------------------
@@ -160,21 +164,25 @@ CREATE TABLE "public"."client" (
 -- ----------------------------
 
 -- ----------------------------
--- Table structure for commandeFournisseur
+-- Table structure for commandes_fournisseur
 -- ----------------------------
-DROP TABLE IF EXISTS "public"."commandeFournisseur";
-CREATE TABLE "public"."commandeFournisseur" (
-  "id" int4 NOT NULL,
+DROP TABLE IF EXISTS "public"."commandes_fournisseur";
+CREATE TABLE "public"."commandes_fournisseur" (
+  "id" int4 NOT NULL DEFAULT nextval('commandes_fournisseur_id_seq'::regclass),
   "date_commande" date NOT NULL,
-  "statut" varchar(255) COLLATE "pg_catalog"."default" NOT NULL,
-  "montant_totale" float4 NOT NULL,
+  "statut" varchar(255) COLLATE "pg_catalog"."default" NOT NULL DEFAULT 'En Attente'::character varying,
+  "date_validation" timestamptz(6),
+  "montant_totale" float8 NOT NULL DEFAULT '0'::double precision,
   "fournisseur" int4 NOT NULL
 )
 ;
 
 -- ----------------------------
--- Records of commandeFournisseur
+-- Records of commandes_fournisseur
 -- ----------------------------
+INSERT INTO "public"."commandes_fournisseur" VALUES (1, '2025-04-18', 'Validée', '2025-04-18 14:42:22.49+02', 18, 1);
+INSERT INTO "public"."commandes_fournisseur" VALUES (2, '2025-04-18', 'En Attente', NULL, 3, 1);
+INSERT INTO "public"."commandes_fournisseur" VALUES (3, '2025-04-18', 'Validée', '2025-04-18 14:56:07.427+02', 30207, 1);
 
 -- ----------------------------
 -- Table structure for facture
@@ -209,6 +217,30 @@ CREATE TABLE "public"."fournisseur" (
 -- ----------------------------
 -- Records of fournisseur
 -- ----------------------------
+INSERT INTO "public"."fournisseur" VALUES (1, 'AZERT', 'ZERTY', 'ZERTy', '34567');
+
+-- ----------------------------
+-- Table structure for lignes_commande_fournisseur
+-- ----------------------------
+DROP TABLE IF EXISTS "public"."lignes_commande_fournisseur";
+CREATE TABLE "public"."lignes_commande_fournisseur" (
+  "id" int4 NOT NULL DEFAULT nextval('lignes_commande_fournisseur_id_seq'::regclass),
+  "produit" int4 NOT NULL,
+  "quantité" int4 NOT NULL,
+  "prix_unitaire" float8 NOT NULL,
+  "commande" int4 NOT NULL
+)
+;
+
+-- ----------------------------
+-- Records of lignes_commande_fournisseur
+-- ----------------------------
+INSERT INTO "public"."lignes_commande_fournisseur" VALUES (1, 5, 1, 3, 1);
+INSERT INTO "public"."lignes_commande_fournisseur" VALUES (2, 5, 5, 3, 1);
+INSERT INTO "public"."lignes_commande_fournisseur" VALUES (3, 5, 1, 3, 2);
+INSERT INTO "public"."lignes_commande_fournisseur" VALUES (4, 5, 1, 3, 3);
+INSERT INTO "public"."lignes_commande_fournisseur" VALUES (5, 5, 69, 3, 3);
+INSERT INTO "public"."lignes_commande_fournisseur" VALUES (6, 5, 9999, 3, 3);
 
 -- ----------------------------
 -- Table structure for mouvement
@@ -227,20 +259,10 @@ CREATE TABLE "public"."mouvement" (
 -- ----------------------------
 -- Records of mouvement
 -- ----------------------------
-INSERT INTO "public"."mouvement" VALUES (13, 'Nazim', 'Sortie', 10, '2025-04-10', 5);
-INSERT INTO "public"."mouvement" VALUES (15, 'Banane', 'Entrée', 10, '2025-04-10', 5);
-INSERT INTO "public"."mouvement" VALUES (20, 'Yaourt', 'Entrée', 15, '2025-04-10', 5);
-INSERT INTO "public"."mouvement" VALUES (22, 'Yaourt', 'Sortie', 49, '2025-04-10', 5);
-INSERT INTO "public"."mouvement" VALUES (23, 'Yaourt', 'Entrée', 18, '2025-04-10', 5);
-INSERT INTO "public"."mouvement" VALUES (24, 'Patate', 'Sortie', 12, '2025-04-10', 5);
-INSERT INTO "public"."mouvement" VALUES (25, 'Jus', 'Entrée', 30, '2025-04-10', 5);
-INSERT INTO "public"."mouvement" VALUES (26, 'fromage', 'Sortie', 25, '2025-04-10', 5);
-INSERT INTO "public"."mouvement" VALUES (27, 'Chocolat', 'Sortie', 30, '2025-04-10', 5);
-INSERT INTO "public"."mouvement" VALUES (28, 'Conserve Poisson', 'Entrée', 3, '2025-04-16', 5);
-INSERT INTO "public"."mouvement" VALUES (33, 'Nv produit', 'Entrée', 44, '2025-04-16', 5);
-INSERT INTO "public"."mouvement" VALUES (34, 'Jus', 'Entrée', 5, '2025-04-16', 6);
-INSERT INTO "public"."mouvement" VALUES (35, 'azf', 'Entrée', 3, '2025-04-16', 6);
-INSERT INTO "public"."mouvement" VALUES (36, 'Cable', 'Entrée', 44, '2025-04-16', 6);
+INSERT INTO "public"."mouvement" VALUES (38, 'Patate', 'Entrée', 50, '2025-04-17', 5);
+INSERT INTO "public"."mouvement" VALUES (39, 'Patate', 'Sortie', 25, '2025-04-17', 5);
+INSERT INTO "public"."mouvement" VALUES (40, 'Patate', 'Sortie', 10, '2025-04-17', 5);
+INSERT INTO "public"."mouvement" VALUES (41, 'Patate', 'Entrée', 20, '2025-04-17', 5);
 
 -- ----------------------------
 -- Table structure for paiement
@@ -275,51 +297,15 @@ CACHE 1
   "description" varchar(255) COLLATE "pg_catalog"."default",
   "prix" float8 NOT NULL,
   "quantite_stock" int4 NOT NULL,
-  "categorie" int4 NOT NULL
+  "categorie" int4 NOT NULL,
+  "codebar" varchar(255) COLLATE "pg_catalog"."default"
 )
 ;
 
 -- ----------------------------
 -- Records of produit
 -- ----------------------------
-INSERT INTO "public"."produit" VALUES (3, 'Farine', 'batata', 5, 5, 1);
-INSERT INTO "public"."produit" VALUES (7, 'chocolat', 'noir', 1.45, 6, 1);
-INSERT INTO "public"."produit" VALUES (8, 'eau', 'bouteilles', 11, 40, 1);
-INSERT INTO "public"."produit" VALUES (11, 'Lait', 'Entier', 3, 20, 1);
-INSERT INTO "public"."produit" VALUES (12, 'levure', 'levure chimique', 1, 25, 1);
-INSERT INTO "public"."produit" VALUES (4, 'Yaourt', 'qposjidpfoiqjs', 55, 18, 1);
-INSERT INTO "public"."produit" VALUES (1, 'Patate', 'jkhqlzdsuiflqisudhfl', 44, 13, 1);
-INSERT INTO "public"."produit" VALUES (10, 'fromage', 'camemeber', 14, 5, 1);
-INSERT INTO "public"."produit" VALUES (9, 'Chocolat', 'Blanc', 10, 0, 1);
-INSERT INTO "public"."produit" VALUES (14, 'Pomme de terre', 'legume', 45.6, 30, 1);
-INSERT INTO "public"."produit" VALUES (5, 'Banane', 'oqijsdfpoijq', 45, 10, 1);
-INSERT INTO "public"."produit" VALUES (2, 'Carottes', 'Fruits sec', 40, 13, 1);
-INSERT INTO "public"."produit" VALUES (6, 'Conserve Poisson', 'zdazad', 3, 33, 1);
-INSERT INTO "public"."produit" VALUES (15, 'EE', 'EE', 33, 4, 1);
-INSERT INTO "public"."produit" VALUES (16, 'EE', 'EE', 33, 4, 1);
-INSERT INTO "public"."produit" VALUES (17, 'EE', 'EE', 33, 4, 1);
-INSERT INTO "public"."produit" VALUES (18, 'EE', 'EE', 33, 4, 1);
-INSERT INTO "public"."produit" VALUES (19, 'Nv produit', 'Aymene l''a ajouté T', 3, 44, 1);
-INSERT INTO "public"."produit" VALUES (13, 'Jus', 'Jus naturel d''orange', 4.5, 35, 1);
-INSERT INTO "public"."produit" VALUES (20, 'azf', '²EFQ', 33, 3, 1);
-INSERT INTO "public"."produit" VALUES (21, 'Cable', 'qiojsdmfoi', 6587, 44, 1);
-
--- ----------------------------
--- Table structure for utilisateur
--- ----------------------------
-DROP TABLE IF EXISTS "public"."utilisateur";
-CREATE TABLE "public"."utilisateur" (
-  "id" int4 NOT NULL,
-  "nom" varchar(255) COLLATE "pg_catalog"."default" NOT NULL,
-  "email" varchar(255) COLLATE "pg_catalog"."default" NOT NULL,
-  "mdp" varchar(255) COLLATE "pg_catalog"."default" NOT NULL,
-  "role" varchar(255) COLLATE "pg_catalog"."default" NOT NULL
-)
-;
-
--- ----------------------------
--- Records of utilisateur
--- ----------------------------
+INSERT INTO "public"."produit" VALUES (5, 'Patate', 'Patate douce', 3, 35, 3, '');
 
 -- ----------------------------
 -- Table structure for utilisateurs
@@ -343,9 +329,33 @@ INSERT INTO "public"."utilisateurs" VALUES (6, 'Yanis Dahmouche', 'yanischkopi@g
 -- ----------------------------
 -- Alter sequences owned by
 -- ----------------------------
+SELECT setval('"public"."CommandeFournisseurs_id_seq"', 1, false);
+
+-- ----------------------------
+-- Alter sequences owned by
+-- ----------------------------
+SELECT setval('"public"."LigneCommandeFournisseur_id_seq"', 7, true);
+
+-- ----------------------------
+-- Alter sequences owned by
+-- ----------------------------
+ALTER SEQUENCE "public"."commandes_fournisseur_id_seq"
+OWNED BY "public"."commandes_fournisseur"."id";
+SELECT setval('"public"."commandes_fournisseur_id_seq"', 3, true);
+
+-- ----------------------------
+-- Alter sequences owned by
+-- ----------------------------
+ALTER SEQUENCE "public"."lignes_commande_fournisseur_id_seq"
+OWNED BY "public"."lignes_commande_fournisseur"."id";
+SELECT setval('"public"."lignes_commande_fournisseur_id_seq"', 6, true);
+
+-- ----------------------------
+-- Alter sequences owned by
+-- ----------------------------
 ALTER SEQUENCE "public"."mouvement_id_seq"
 OWNED BY "public"."mouvement"."id";
-SELECT setval('"public"."mouvement_id_seq"', 36, true);
+SELECT setval('"public"."mouvement_id_seq"', 41, true);
 
 -- ----------------------------
 -- Alter sequences owned by
@@ -353,6 +363,13 @@ SELECT setval('"public"."mouvement_id_seq"', 36, true);
 ALTER SEQUENCE "public"."produit_id_seq"
 OWNED BY "public"."produit"."id";
 SELECT setval('"public"."produit_id_seq"', 21, true);
+
+-- ----------------------------
+-- Alter sequences owned by
+-- ----------------------------
+ALTER SEQUENCE "public"."produit_id_seq1"
+OWNED BY "public"."produit"."id";
+SELECT setval('"public"."produit_id_seq1"', 5, true);
 
 -- ----------------------------
 -- Alter sequences owned by
@@ -367,26 +384,6 @@ SELECT setval('"public"."utilisateurs_id_seq"', 6, true);
 ALTER TABLE "public"."CartonProduit" ADD CONSTRAINT "CartonProduit_pkey" PRIMARY KEY ("id_carton");
 
 -- ----------------------------
--- Checks structure for table CommandesClient
--- ----------------------------
-ALTER TABLE "public"."CommandesClient" ADD CONSTRAINT "chk_status" CHECK (statut::text = ANY (ARRAY['En Attente'::character varying::text, 'Valide'::character varying::text, 'Expedie'::character varying::text]));
-
--- ----------------------------
--- Primary Key structure for table CommandesClient
--- ----------------------------
-ALTER TABLE "public"."CommandesClient" ADD CONSTRAINT "LigneCommandesClient_pkey" PRIMARY KEY ("id");
-
--- ----------------------------
--- Primary Key structure for table LigneCommandeClient
--- ----------------------------
-ALTER TABLE "public"."LigneCommandeClient" ADD CONSTRAINT "LigneCommandeClient_pkey" PRIMARY KEY ("id");
-
--- ----------------------------
--- Primary Key structure for table LigneCommandeFournisseur
--- ----------------------------
-ALTER TABLE "public"."LigneCommandeFournisseur" ADD CONSTRAINT "LigneCommandeFournisseur_pkey" PRIMARY KEY ("id");
-
--- ----------------------------
 -- Primary Key structure for table categorie
 -- ----------------------------
 ALTER TABLE "public"."categorie" ADD CONSTRAINT "categorie_pkey" PRIMARY KEY ("id");
@@ -397,14 +394,9 @@ ALTER TABLE "public"."categorie" ADD CONSTRAINT "categorie_pkey" PRIMARY KEY ("i
 ALTER TABLE "public"."client" ADD CONSTRAINT "client_pkey" PRIMARY KEY ("id");
 
 -- ----------------------------
--- Checks structure for table commandeFournisseur
+-- Primary Key structure for table commandes_fournisseur
 -- ----------------------------
-ALTER TABLE "public"."commandeFournisseur" ADD CONSTRAINT "chk_status" CHECK (statut::text = ANY (ARRAY['En Attente'::character varying::text, 'Valide'::character varying::text, 'Livre'::character varying::text]));
-
--- ----------------------------
--- Primary Key structure for table commandeFournisseur
--- ----------------------------
-ALTER TABLE "public"."commandeFournisseur" ADD CONSTRAINT "commandeFournisseur_pkey" PRIMARY KEY ("id");
+ALTER TABLE "public"."commandes_fournisseur" ADD CONSTRAINT "commandes_fournisseur_pkey" PRIMARY KEY ("id");
 
 -- ----------------------------
 -- Checks structure for table facture
@@ -420,6 +412,11 @@ ALTER TABLE "public"."facture" ADD CONSTRAINT "facture_pkey" PRIMARY KEY ("id");
 -- Primary Key structure for table fournisseur
 -- ----------------------------
 ALTER TABLE "public"."fournisseur" ADD CONSTRAINT "fournisseur_pkey" PRIMARY KEY ("id");
+
+-- ----------------------------
+-- Primary Key structure for table lignes_commande_fournisseur
+-- ----------------------------
+ALTER TABLE "public"."lignes_commande_fournisseur" ADD CONSTRAINT "lignes_commande_fournisseur_pkey" PRIMARY KEY ("id");
 
 -- ----------------------------
 -- Primary Key structure for table mouvement
@@ -439,22 +436,12 @@ ALTER TABLE "public"."paiement" ADD CONSTRAINT "paiement_pkey" PRIMARY KEY ("id"
 -- ----------------------------
 -- Auto increment value for produit
 -- ----------------------------
-SELECT setval('"public"."produit_id_seq"', 21, true);
+SELECT setval('"public"."produit_id_seq1"', 5, true);
 
 -- ----------------------------
 -- Primary Key structure for table produit
 -- ----------------------------
 ALTER TABLE "public"."produit" ADD CONSTRAINT "produit_pkey" PRIMARY KEY ("id");
-
--- ----------------------------
--- Checks structure for table utilisateur
--- ----------------------------
-ALTER TABLE "public"."utilisateur" ADD CONSTRAINT "chk_role" CHECK (role::text = ANY (ARRAY['Admin'::character varying::text, 'Gestionnaire'::character varying::text, 'Employe'::character varying::text]));
-
--- ----------------------------
--- Primary Key structure for table utilisateur
--- ----------------------------
-ALTER TABLE "public"."utilisateur" ADD CONSTRAINT "utilisateur_pkey" PRIMARY KEY ("id");
 
 -- ----------------------------
 -- Uniques structure for table utilisateurs
@@ -467,31 +454,15 @@ ALTER TABLE "public"."utilisateurs" ADD CONSTRAINT "utilisateurs_email_key" UNIQ
 ALTER TABLE "public"."utilisateurs" ADD CONSTRAINT "utilisateurs_pkey" PRIMARY KEY ("id");
 
 -- ----------------------------
--- Foreign Keys structure for table CommandesClient
+-- Foreign Keys structure for table commandes_fournisseur
 -- ----------------------------
-ALTER TABLE "public"."CommandesClient" ADD CONSTRAINT "client" FOREIGN KEY ("client") REFERENCES "public"."client" ("id") ON DELETE NO ACTION ON UPDATE NO ACTION;
+ALTER TABLE "public"."commandes_fournisseur" ADD CONSTRAINT "commandes_fournisseur_fournisseur_fkey" FOREIGN KEY ("fournisseur") REFERENCES "public"."fournisseur" ("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- ----------------------------
--- Foreign Keys structure for table LigneCommandeClient
+-- Foreign Keys structure for table lignes_commande_fournisseur
 -- ----------------------------
-ALTER TABLE "public"."LigneCommandeClient" ADD CONSTRAINT "commande" FOREIGN KEY ("commande") REFERENCES "public"."commandeFournisseur" ("id") ON DELETE NO ACTION ON UPDATE NO ACTION;
-ALTER TABLE "public"."LigneCommandeClient" ADD CONSTRAINT "produit" FOREIGN KEY ("produit") REFERENCES "public"."produit" ("id") ON DELETE NO ACTION ON UPDATE NO ACTION;
-
--- ----------------------------
--- Foreign Keys structure for table LigneCommandeFournisseur
--- ----------------------------
-ALTER TABLE "public"."LigneCommandeFournisseur" ADD CONSTRAINT "commande" FOREIGN KEY ("commande") REFERENCES "public"."commandeFournisseur" ("id") ON DELETE NO ACTION ON UPDATE NO ACTION;
-ALTER TABLE "public"."LigneCommandeFournisseur" ADD CONSTRAINT "produits" FOREIGN KEY ("produit") REFERENCES "public"."produit" ("id") ON DELETE NO ACTION ON UPDATE NO ACTION;
-
--- ----------------------------
--- Foreign Keys structure for table commandeFournisseur
--- ----------------------------
-ALTER TABLE "public"."commandeFournisseur" ADD CONSTRAINT "fournisseur" FOREIGN KEY ("fournisseur") REFERENCES "public"."fournisseur" ("id") ON DELETE NO ACTION ON UPDATE NO ACTION;
-
--- ----------------------------
--- Foreign Keys structure for table facture
--- ----------------------------
-ALTER TABLE "public"."facture" ADD CONSTRAINT "commande" FOREIGN KEY ("commande_client") REFERENCES "public"."commandeFournisseur" ("id") ON DELETE NO ACTION ON UPDATE NO ACTION;
+ALTER TABLE "public"."lignes_commande_fournisseur" ADD CONSTRAINT "lignes_commande_fournisseur_commande_fkey" FOREIGN KEY ("commande") REFERENCES "public"."commandes_fournisseur" ("id") ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE "public"."lignes_commande_fournisseur" ADD CONSTRAINT "lignes_commande_fournisseur_produit_fkey" FOREIGN KEY ("produit") REFERENCES "public"."produit" ("id") ON DELETE NO ACTION ON UPDATE CASCADE;
 
 -- ----------------------------
 -- Foreign Keys structure for table mouvement

@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom"
 import Header from "../../components/Header";
 import BarNavigation from "../../components/BarNavigation";
 import axios from "axios";
@@ -10,6 +10,8 @@ function HistoriqueStock() {
   const [historique, setHistorique] = useState([]);
   const [dateDebut, setDateDebut] = useState("");
   const [dateFin, setDateFin] = useState("");
+  const navigate = useNavigate()
+
 
   const [filtreUtilisateur, setFiltreUtilisateur] = useState("");
   const [filtreProduit, setFiltreProduit] = useState("");
@@ -39,6 +41,10 @@ function HistoriqueStock() {
   const handleFiltrer = () => {
     fetchHistorique();
     setPage(1);
+  };
+  
+  const handleBack = () => {
+    navigate(-1); // 👈 revient à la page précédente dans l'historique
   };
 
   const historiqueFiltré = historique.filter((item) => {
@@ -96,6 +102,7 @@ function HistoriqueStock() {
           background-color: #f5f5f5;
           box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
           border: none;
+          margin-bottom: 20px;
           transition: background-color 0.2s ease;
         }
 
@@ -163,6 +170,9 @@ function HistoriqueStock() {
               className="select-input"
               value={filtreAction}
               onChange={(e) => setFiltreAction(e.target.value)}
+              style={{ 
+                backgroundColor: "#ffffff",
+               }}
             >
               <option value="">Tous</option>
               <option value="Entrée">Entrée</option>
@@ -219,9 +229,9 @@ function HistoriqueStock() {
         <button className="btn" onClick={exportPDF}>
           Exporter (PDF)
         </button>
-        <Link to="/stock" className="btn">
-          Retour
-        </Link>
+        <button onClick={handleBack} className="btn">
+      Retour
+    </button>
       </div>
 
       <BarNavigation />

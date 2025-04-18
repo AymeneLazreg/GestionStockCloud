@@ -84,8 +84,8 @@ function AccueilGestionnaire() {
         <Link to="/historique-stock" className="btn">
           Voir l'historique
         </Link>
-        <Link to="/scanner" className="btn">
-          Scanner un produit
+        <Link to="/ajout-produit" className="btn">
+          Ajout Rapide
         </Link>
       </div>
 

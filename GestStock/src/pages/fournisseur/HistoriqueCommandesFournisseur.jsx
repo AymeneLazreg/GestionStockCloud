@@ -1,43 +1,70 @@
-"use client"
-import { useNavigate } from "react-router-dom"
-import Header from "../../components/Header"
-import MenuListe from "../../components/MenuListe"
-import BarNavigation from "../../components/BarNavigation"
+import { useEffect, useState } from "react";
+import Header from "../../components/Header";
+import BarNavigation from "../../components/BarNavigation";
 
 function HistoriqueCommandesFournisseur() {
-  const navigate = useNavigate()
-  const menu1Items = ["25/02/2025", "26/02/2025", "27/02/2025", "28/02/2025"]
-  const menu2Items = ["Valide", "En Attente", "Livre", "En Attente"]
+  const [commandes, setCommandes] = useState([]);
+  const [loading, setLoading] = useState(true);
 
-  const handleRetour = () => {
-    navigate("/commandes-fournisseur")
-  }
+  useEffect(() => {
+    const fetchHistorique = async () => {
+      try {
+        const res = await fetch("http://localhost:8832/api/commandes-fournisseur/historique");
+        if (!res.ok) throw new Error("Erreur serveur");
+        const data = await res.json();
+        setCommandes(data);
+      } catch (err) {
+        console.error("Erreur chargement historique :", err);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchHistorique();
+  }, []);
+
+  if (loading) return <div>Chargement…</div>;
 
   return (
     <>
-      <Header title="Historique Commandes" />
+      <Header title="Historique des commandes" />
 
-      <div className="body">
-        <div className="menu">
-          <div className="menu1">
-            <p>Commande</p>
-            <MenuListe items={menu1Items} />
+      <div className="p-4">
+        {commandes.length === 0 ? (
+          <p>Aucune commande trouvée.</p>
+        ) : (
+          <div className="grid grid-cols-1 gap-4">
+            {commandes.map((cmd) => (
+              <div
+                key={cmd.id}
+                className="bg-white p-4 rounded shadow"
+              >
+                <p className="font-semibold text-lg">
+                  Commande #{cmd.id}
+                </p>
+                <p>Date : {new Date(cmd.date_commande).toLocaleDateString('fr-FR')}</p>
+                <p>Fournisseur : {cmd.fournisseurInfo?.nom}</p>
+                <p>Statut : {cmd.statut}</p>
+                {cmd.date_validation && (
+                  <p>Date validation : {new Date(cmd.date_validation).toLocaleDateString('fr-FR')}</p>
+                )}
+              </div>
+            ))}
           </div>
-          <div className="menu2">
-            <p>Statut</p>
-            <MenuListe items={menu2Items} />
-          </div>
-        </div>
+        )}
       </div>
 
-      <button className="btn" onClick={handleRetour}>
-        Retour
-      </button>
+      <div className="p-4">
+        <button
+          onClick={() => window.history.back()}
+          className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
+        >
+          Retour
+        </button>
+      </div>
 
       <BarNavigation />
     </>
-  )
+  );
 }
 
-export default HistoriqueCommandesFournisseur
-
+export default HistoriqueCommandesFournisseur;

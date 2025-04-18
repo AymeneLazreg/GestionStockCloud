@@ -7,7 +7,7 @@ import NvCommandeClient from "./pages/client/NvCommandeClient";
 import CommandesFournisseur from "./pages/fournisseur/CommandesFournisseur";
 import HistoriqueCommandesFournisseur from "./pages/fournisseur/HistoriqueCommandesFournisseur";
 import AjoutProduitCommandeFournisseur from "./pages/fournisseur/AjoutProduitCommandeFournisseur";
-import NvCommandeFournisseur from "./pages/fournisseur/NvCommandeFournisseur";
+import NvCommandeFournisseur from "./pages/fournisseur/DetailsCommandeFournisseur";
 import Stock from "./pages/gestion/Stock";
 import HistoriqueStock from "./pages/gestion/HistoriqueStock";
 import HistoriqueProduit from "./pages/gestion/HistoriqueProduit";
@@ -40,8 +40,8 @@ function App() {
           <Route path="/commandes-fournisseur" element={<CommandesFournisseur />} />
           <Route path="/historique-commandes-fournisseur" element={<HistoriqueCommandesFournisseur />} />
           <Route path="/ajout-produit-commande-fournisseur" element={<AjoutProduitCommandeFournisseur />} />
-          <Route path="/nouvelle-commande-fournisseur" element={<NvCommandeFournisseur />} />
-
+          <Route path="/details-commande-fournisseur" element={<NvCommandeFournisseur />} />
+          <Route path="/details-commande-fournisseur/:id" element={<NvCommandeFournisseur />} />
           {/* Pages Gestion */}
           <Route path="/stock" element={<Stock />} />
           <Route path="/historique-stock" element={<HistoriqueStock />} />

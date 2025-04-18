@@ -71,6 +71,10 @@ export default function Profile() {
             alert("Erreur lors de la mise à jour du profil.")
         }
     }
+    
+  const handleBack = () => {
+    navigate(-1); // 👈 revient à la page précédente dans l'historique
+  };
 
     const handleChangePassword = async () => {
         const { currentPassword, newPassword, confirmPassword } = passwordData
@@ -159,6 +163,11 @@ export default function Profile() {
 
                                 <button className="save-btn" onClick={handleSave}>
                                     Enregistrer les modifications
+                                </button>
+                                <button className="save-btn" 
+                                style={{ marginLeft: "10px" }}
+                                onClick={handleBack}>
+                                    Retour
                                 </button>
                             </div>
                         )}
