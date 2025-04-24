@@ -6,7 +6,6 @@ import AjoutProduitCommandeClient from "./pages/client/AjoutProduitCommandeClien
 import NvCommandeClient from "./pages/client/NvCommandeClient";
 import CommandesFournisseur from "./pages/fournisseur/CommandesFournisseur";
 import HistoriqueCommandesFournisseur from "./pages/fournisseur/HistoriqueCommandesFournisseur";
-import AjoutProduitCommandeFournisseur from "./pages/fournisseur/AjoutProduitCommandeFournisseur";
 import NvCommandeFournisseur from "./pages/fournisseur/DetailsCommandeFournisseur";
 import Stock from "./pages/gestion/Stock";
 import HistoriqueStock from "./pages/gestion/HistoriqueStock";
@@ -18,6 +17,7 @@ import Connection from "./pages/auth/Connection";
 import Profile from "./pages/auth/Profile";
 import Scanner from "./pages/utils/Scanner";
 import ModifierProduit from "./pages/gestion/ModifierProduit"; // adapte le chemin si besoin
+import ListeUtilisateurs from "./pages/auth/ListeUtilisateurs";
 
 import "./App.css";
 
@@ -29,6 +29,7 @@ function App() {
           {/* Pages d'authentification */}
           <Route path="/login" element={<Connection />} />
           <Route path="/profile" element={<Profile />} />
+          <Route path="/liste-utilisateurs" element={<ListeUtilisateurs />} />
 
           {/* Pages Client */}
           <Route path="/commandes-client" element={<CommandesClient />} />
@@ -39,7 +40,6 @@ function App() {
           {/* Pages Fournisseur */}
           <Route path="/commandes-fournisseur" element={<CommandesFournisseur />} />
           <Route path="/historique-commandes-fournisseur" element={<HistoriqueCommandesFournisseur />} />
-          <Route path="/ajout-produit-commande-fournisseur" element={<AjoutProduitCommandeFournisseur />} />
           <Route path="/details-commande-fournisseur" element={<NvCommandeFournisseur />} />
           <Route path="/details-commande-fournisseur/:id" element={<NvCommandeFournisseur />} />
           {/* Pages Gestion */}

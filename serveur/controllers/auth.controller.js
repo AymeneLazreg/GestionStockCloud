@@ -56,8 +56,11 @@ export const login = async (req, res) => {
       return res.status(400).json({ message: "Email ou mot de passe incorrect." });
     }
     // Génération du token JWT
-    const token = jwt.sign({ id: user.id }, process.env.JWT_SECRET, { expiresIn: '1h' });
-    console.log('utilisateur connecté : ', user.nom);
+    const token = jwt.sign(
+      { id: user.id, role: user.role },     // ← on passe aussi le rôle
+      process.env.JWT_SECRET,
+      { expiresIn: '1h' }
+    );    console.log('utilisateur connecté : ', user.nom);
     // Envoi de la réponse  
 
     return res.json({ token });

@@ -3,8 +3,45 @@ import authenticateToken from '../middleware/auth.js'
 import User from '../models/user.model.js'
 import bcrypt from 'bcrypt' // à ajouter en haut du fichier si ce n'est pas déjà fait
 
-
 const router = express.Router()
+
+// GET /api/user/utilisateurs
+// Retourne la liste de tous les users (id, nom, email, role)
+router.get('/utilisateurs', authenticateToken, async (req, res) => {
+  try {
+    if (req.user.role !== 'admin') {
+      return res.status(403).json({ message: 'Accès refusé' });
+    }
+    const utilisateurs = await User.findAll({
+      attributes: ['id', 'nom', 'email', 'role']
+    });
+    res.json(utilisateurs);
+  } catch (error) {
+    console.error('Erreur récupération utilisateurs :', error);
+    res.status(500).json({ message: 'Erreur serveur' });
+  }
+});
+
+// PUT /api/user/utilisateurs/:id
+// Met à jour le rôle d’un utilisateur
+router.put('/utilisateurs/:id', authenticateToken, async (req, res) => {
+  const { role } = req.body;
+  try {
+    if (req.user.role !== 'admin') {
+      return res.status(403).json({ message: 'Accès refusé' });
+    }
+    const user = await User.findByPk(req.params.id);
+    if (!user) {
+      return res.status(404).json({ message: 'Utilisateur non trouvé' });
+    }
+    user.role = role;
+    await user.save();
+    res.json({ id: user.id, nom: user.nom, email: user.email, role: user.role });
+  } catch (error) {
+    console.error('Erreur mise à jour rôle :', error);
+    res.status(500).json({ message: 'Erreur serveur' });
+  }
+});
 
 // Récupération du profil utilisateur
 router.get('/profile', authenticateToken, async (req, res) => {

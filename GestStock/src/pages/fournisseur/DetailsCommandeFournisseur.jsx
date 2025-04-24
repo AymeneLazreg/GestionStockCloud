@@ -13,16 +13,29 @@ function DetailsCommandeFournisseur() {
   const [commande, setCommande] = useState(null);
   const [loading, setLoading] = useState(true);
 
+  // Récupère le token JWT
+  const getToken = () => localStorage.getItem("token");
+
   // Charge la commande + produits + lignes
   useEffect(() => {
     if (!id) return;
+    const token = getToken();
+    const headers = token
+      ? { "Content-Type": "application/json", Authorization: `Bearer ${token}` }
+      : { "Content-Type": "application/json" };
+
     const charger = async () => {
       try {
         const [r1, r2, r3] = await Promise.all([
-          fetch("http://localhost:8832/api/produits"),
-          fetch(`http://localhost:8832/api/commandes-fournisseur/${id}`),
-          fetch(`http://localhost:8832/api/lignes-commande-fournisseur/${id}`)
+          fetch("http://localhost:8832/api/produits", { headers }),
+          fetch(`http://localhost:8832/api/commandes-fournisseur/${id}`, { headers }),
+          fetch(`http://localhost:8832/api/lignes-commande-fournisseur/${id}`, { headers })
         ]);
+
+        if (r2.status === 401 || r3.status === 401) {
+          alert("Session expirée, veuillez vous reconnecter.");
+          return navigate("/login");
+        }
 
         const produitsData = await r1.json();
         setProduits(produitsData);
@@ -32,52 +45,115 @@ function DetailsCommandeFournisseur() {
         else console.error("Err cmd:", cmdJson);
 
         const lignesData = await r3.json();
-        setLignes(lignesData);
+        setLignes(Array.isArray(lignesData) ? lignesData : []);
       } catch (err) {
         console.error("Erreur chargement:", err);
       } finally {
         setLoading(false);
       }
     };
+
     charger();
-  }, [id]);
+  }, [id, navigate]);
 
   // Récupère à nouveau les lignes (après ajout)
   const reloadLignes = async () => {
-    const r = await fetch(`http://localhost:8832/api/lignes-commande-fournisseur/${id}`);
-    setLignes(await r.json());
+    const token = getToken();
+    const res = await fetch(
+      `http://localhost:8832/api/lignes-commande-fournisseur/${id}`,
+      { headers: { Authorization: `Bearer ${token}` } }
+    );
+    const data = await res.json();
+    setLignes(Array.isArray(data) ? data : []);
+  };
+
+  const supprimerCommande = async () => {
+    if (!window.confirm("Voulez-vous vraiment supprimer cette commande ?")) return;
+    const token = getToken();
+    try {
+      const res = await fetch(
+        `http://localhost:8832/api/commandes-fournisseur/${id}`,
+        {
+          method: "DELETE",
+          headers: { Authorization: `Bearer ${token}` }
+        }
+      );
+      if (res.status === 401) {
+        alert("Session expirée, veuillez vous reconnecter.");
+        return navigate("/login");
+      }
+      navigate("/commandes-fournisseur");
+    } catch (err) {
+      console.error("Erreur suppression :", err);
+    }
   };
 
   const ajouterProduit = async () => {
     if (!produitChoisi) return;
+    const token = getToken();
     try {
       await fetch("http://localhost:8832/api/lignes-commande-fournisseur", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`
+        },
         body: JSON.stringify({
           commande: parseInt(id, 10),
           produit: parseInt(produitChoisi, 10),
-          quantité: quantite,
-          prix_unitaire: produits.find(p => p.id === parseInt(produitChoisi,10)).prix
+          quantite: quantite,
+          prix_unitaire: produits.find(p => p.id === parseInt(produitChoisi, 10)).prix
         })
       });
       setProduitChoisi("");
       setQuantite(1);
       await reloadLignes();
     } catch (err) {
-      console.error("Erreur ajout produit:", err);
+      console.error("Erreur ajout produit :", err);
     }
   };
 
   const finaliserCommande = async () => {
+    const token = getToken();
+    if (!token) {
+      alert("Vous devez être connecté pour valider cette commande.");
+      return navigate("/login");
+    }
+
+    // Prépare un payload minimal pour le backend
+    const payloadLignes = lignes.map(l => ({
+      produit: l.produit,
+      quantite: l.quantité,
+      prix_unitaire: l.prix_unitaire
+    }));
+
     try {
-      await fetch(
+      const res = await fetch(
         `http://localhost:8832/api/commandes-fournisseur/${id}/valider`,
-        { method: "PUT" }
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`
+          },
+          body: JSON.stringify({ lignes: payloadLignes })
+        }
       );
+
+      if (res.status === 401) {
+        alert("Session expirée, veuillez vous reconnecter.");
+        return navigate("/login");
+      }
+      if (!res.ok) {
+        const err = await res.json();
+        console.error("Erreur backend :", err);
+        return alert(err.message || "Erreur lors de la validation");
+      }
+
       navigate("/commandes-fournisseur");
     } catch (err) {
-      console.error("Erreur validation:", err);
+      console.error("Erreur validation :", err);
+      alert("Erreur de communication avec le serveur.");
     }
   };
 
@@ -93,8 +169,8 @@ function DetailsCommandeFournisseur() {
             Fournisseur : {commande.fournisseurInfo?.nom}
           </h2>
           <p>
-            Date : {new Date(commande.date_commande)
-              .toLocaleDateString('fr-FR')}
+            Date :{" "}
+            {new Date(commande.date_commande).toLocaleDateString("fr-FR")}
           </p>
           <p>Statut : {commande.statut}</p>
         </div>
@@ -102,9 +178,7 @@ function DetailsCommandeFournisseur() {
         <div className="grid grid-cols-1 gap-4 mb-8">
           {lignes.map(l => (
             <div key={l.id} className="bg-white p-4 rounded shadow">
-              <h3 className="font-semibold">
-                {l.produitInfo?.nom}
-              </h3>
+              <h3 className="font-semibold">{l.produitInfo?.nom}</h3>
               <p>Quantité : {l.quantité}</p>
               <p>PU : {l.prix_unitaire}€</p>
               <p>Total : {(l.quantité * l.prix_unitaire).toFixed(2)}€</p>
@@ -153,12 +227,17 @@ function DetailsCommandeFournisseur() {
           </button>
 
           <button
-          onClick={() => window.history.back()}
-          className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 disabled:opacity-50 margin-left: 10px"
-          style={{ marginLeft: "10px" }}
-        >
-          Retour
-        </button>
+            onClick={() => window.history.back()}
+            className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 ml-4 mt-4"
+          >
+            Retour
+          </button>
+          <button
+            onClick={supprimerCommande}
+            className="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600 ml-4 mt-4"
+          >
+            Supprimer la commande
+          </button>
         </div>
       </div>
       <BarNavigation />

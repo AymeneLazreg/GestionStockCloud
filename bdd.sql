@@ -12,7 +12,7 @@
  Target Server Version : 170003 (170003)
  File Encoding         : 65001
 
- Date: 18/04/2025 14:57:09
+ Date: 24/04/2025 21:14:23
 */
 
 
@@ -181,8 +181,20 @@ CREATE TABLE "public"."commandes_fournisseur" (
 -- Records of commandes_fournisseur
 -- ----------------------------
 INSERT INTO "public"."commandes_fournisseur" VALUES (1, '2025-04-18', 'Validée', '2025-04-18 14:42:22.49+02', 18, 1);
-INSERT INTO "public"."commandes_fournisseur" VALUES (2, '2025-04-18', 'En Attente', NULL, 3, 1);
 INSERT INTO "public"."commandes_fournisseur" VALUES (3, '2025-04-18', 'Validée', '2025-04-18 14:56:07.427+02', 30207, 1);
+INSERT INTO "public"."commandes_fournisseur" VALUES (4, '2025-04-22', 'Validée', '2025-04-22 01:44:50.702+02', 3, 1);
+INSERT INTO "public"."commandes_fournisseur" VALUES (5, '2025-04-22', 'Validée', '2025-04-22 01:47:28.657+02', 172830, 1);
+INSERT INTO "public"."commandes_fournisseur" VALUES (2, '2025-04-18', 'Validée', '2025-04-22 17:32:35.073+02', 1499, 1);
+INSERT INTO "public"."commandes_fournisseur" VALUES (7, '2025-04-24', 'Validée', '2025-04-24 17:13:48.21+02', 123450, 1);
+INSERT INTO "public"."commandes_fournisseur" VALUES (8, '2025-04-24', 'Validée', '2025-04-24 18:56:51.789+02', 3, 1);
+INSERT INTO "public"."commandes_fournisseur" VALUES (11, '2025-04-24', 'Validée', '2025-04-24 19:27:36.246+02', 123450, 1);
+INSERT INTO "public"."commandes_fournisseur" VALUES (13, '2025-04-24', 'Validée', '2025-04-24 19:46:36.079+02', 47034, 1);
+INSERT INTO "public"."commandes_fournisseur" VALUES (14, '2025-04-24', 'Validée', '2025-04-24 19:47:09.109+02', 299997, 1);
+INSERT INTO "public"."commandes_fournisseur" VALUES (15, '2025-04-24', 'Validée', '2025-04-24 19:50:38.153+02', 5997, 1);
+INSERT INTO "public"."commandes_fournisseur" VALUES (16, '2025-04-24', 'Validée', '2025-04-24 20:47:38.734+02', 300, 1);
+INSERT INTO "public"."commandes_fournisseur" VALUES (18, '2025-04-24', 'Validée', '2025-04-24 21:04:26.818+02', 300, 1);
+INSERT INTO "public"."commandes_fournisseur" VALUES (19, '2025-04-24', 'Validée', '2025-04-24 21:10:50.926+02', 3400, 1);
+INSERT INTO "public"."commandes_fournisseur" VALUES (20, '2025-04-24', 'Validée', '2025-04-24 21:12:14.822+02', 3700, 1);
 
 -- ----------------------------
 -- Table structure for facture
@@ -241,6 +253,24 @@ INSERT INTO "public"."lignes_commande_fournisseur" VALUES (3, 5, 1, 3, 2);
 INSERT INTO "public"."lignes_commande_fournisseur" VALUES (4, 5, 1, 3, 3);
 INSERT INTO "public"."lignes_commande_fournisseur" VALUES (5, 5, 69, 3, 3);
 INSERT INTO "public"."lignes_commande_fournisseur" VALUES (6, 5, 9999, 3, 3);
+INSERT INTO "public"."lignes_commande_fournisseur" VALUES (7, 5, 1, 3, 4);
+INSERT INTO "public"."lignes_commande_fournisseur" VALUES (8, 6, 14, 12345, 5);
+INSERT INTO "public"."lignes_commande_fournisseur" VALUES (9, 7, 44, 34, 2);
+INSERT INTO "public"."lignes_commande_fournisseur" VALUES (10, 6, 10, 12345, 7);
+INSERT INTO "public"."lignes_commande_fournisseur" VALUES (13, 5, 1, 3, 8);
+INSERT INTO "public"."lignes_commande_fournisseur" VALUES (14, 6, 10, 12345, 11);
+INSERT INTO "public"."lignes_commande_fournisseur" VALUES (16, 5, 15678, 3, 13);
+INSERT INTO "public"."lignes_commande_fournisseur" VALUES (17, 5, 99999, 3, 14);
+INSERT INTO "public"."lignes_commande_fournisseur" VALUES (18, 5, 1999, 3, 15);
+INSERT INTO "public"."lignes_commande_fournisseur" VALUES (19, 5, 100, 3, 16);
+INSERT INTO "public"."lignes_commande_fournisseur" VALUES (21, 5, 100, 3, 18);
+INSERT INTO "public"."lignes_commande_fournisseur" VALUES (22, 5, 100, 3, 18);
+INSERT INTO "public"."lignes_commande_fournisseur" VALUES (23, 7, 100, 34, 19);
+INSERT INTO "public"."lignes_commande_fournisseur" VALUES (24, 7, 100, 34, 19);
+INSERT INTO "public"."lignes_commande_fournisseur" VALUES (25, 5, 100, 3, 20);
+INSERT INTO "public"."lignes_commande_fournisseur" VALUES (26, 7, 100, 34, 20);
+INSERT INTO "public"."lignes_commande_fournisseur" VALUES (27, 5, 100, 3, 20);
+INSERT INTO "public"."lignes_commande_fournisseur" VALUES (28, 7, 100, 34, 20);
 
 -- ----------------------------
 -- Table structure for mouvement
@@ -263,6 +293,15 @@ INSERT INTO "public"."mouvement" VALUES (38, 'Patate', 'Entrée', 50, '2025-04-1
 INSERT INTO "public"."mouvement" VALUES (39, 'Patate', 'Sortie', 25, '2025-04-17', 5);
 INSERT INTO "public"."mouvement" VALUES (40, 'Patate', 'Sortie', 10, '2025-04-17', 5);
 INSERT INTO "public"."mouvement" VALUES (41, 'Patate', 'Entrée', 20, '2025-04-17', 5);
+INSERT INTO "public"."mouvement" VALUES (42, 'SDGFDF', 'Entrée', 23456, '2025-04-21', 6);
+INSERT INTO "public"."mouvement" VALUES (43, 'SDGFDF', 'Sortie', 23222, '2025-04-21', 6);
+INSERT INTO "public"."mouvement" VALUES (44, 'Produit X', 'Entrée', 15, '2025-04-22', 5);
+INSERT INTO "public"."mouvement" VALUES (45, 'Patate', 'Sortie', 35, '2025-04-24', 5);
+INSERT INTO "public"."mouvement" VALUES (46, 'Produit X', 'Sortie', 13, '2025-04-24', 5);
+INSERT INTO "public"."mouvement" VALUES (47, 'Patate', 'Entrée', 100, '2025-04-24', 5);
+INSERT INTO "public"."mouvement" VALUES (48, 'Produit X', 'Entrée', 100, '2025-04-24', 5);
+INSERT INTO "public"."mouvement" VALUES (49, 'Patate', 'Entrée', 100, '2025-04-24', 5);
+INSERT INTO "public"."mouvement" VALUES (50, 'Produit X', 'Entrée', 100, '2025-04-24', 5);
 
 -- ----------------------------
 -- Table structure for paiement
@@ -305,7 +344,9 @@ CACHE 1
 -- ----------------------------
 -- Records of produit
 -- ----------------------------
-INSERT INTO "public"."produit" VALUES (5, 'Patate', 'Patate douce', 3, 35, 3, '');
+INSERT INTO "public"."produit" VALUES (6, 'SDGFDF', 'é"''(-è', 12345, 234, 1, '3456789');
+INSERT INTO "public"."produit" VALUES (5, 'Patate', 'Patate douce', 3, 200, 3, '');
+INSERT INTO "public"."produit" VALUES (7, 'Produit X', 'Description produit X', 34, 202, 1, '');
 
 -- ----------------------------
 -- Table structure for utilisateurs
@@ -323,8 +364,9 @@ CREATE TABLE "public"."utilisateurs" (
 -- ----------------------------
 -- Records of utilisateurs
 -- ----------------------------
-INSERT INTO "public"."utilisateurs" VALUES (5, 'aymene LAZREG', 'aymenlazreg4@gmail.com', '$2b$10$DdWyx2VQmtD8WyqRrtRyPOstBN3YuxRjaHLsvltCfx9OBMmcX434K', 'utilisateur');
-INSERT INTO "public"."utilisateurs" VALUES (6, 'Yanis Dahmouche', 'yanischkopi@gmail.com', '$2b$10$nhADOJaakECYRumd1h6RF.8L.wighIr8jaGJPXPzK/qGhLgZlxm6G', 'utilisateur');
+INSERT INTO "public"."utilisateurs" VALUES (5, 'aymene LAZREG', 'aymenlazreg4@gmail.com', '$2b$10$DdWyx2VQmtD8WyqRrtRyPOstBN3YuxRjaHLsvltCfx9OBMmcX434K', 'admin');
+INSERT INTO "public"."utilisateurs" VALUES (6, 'Yanis Dahmouche', 'yanischkopi@gmail.com', '$2b$10$nhADOJaakECYRumd1h6RF.8L.wighIr8jaGJPXPzK/qGhLgZlxm6G', 'gestionnaire');
+INSERT INTO "public"."utilisateurs" VALUES (7, 'Super Admin', 'admin@admin.com', '$2b$10$TNUFukAmu97IQCm07U9aLex1QZ.4YPHLtNXMWHIj8CVFo.OkBNxB.', 'client');
 
 -- ----------------------------
 -- Alter sequences owned by
@@ -341,21 +383,21 @@ SELECT setval('"public"."LigneCommandeFournisseur_id_seq"', 7, true);
 -- ----------------------------
 ALTER SEQUENCE "public"."commandes_fournisseur_id_seq"
 OWNED BY "public"."commandes_fournisseur"."id";
-SELECT setval('"public"."commandes_fournisseur_id_seq"', 3, true);
+SELECT setval('"public"."commandes_fournisseur_id_seq"', 20, true);
 
 -- ----------------------------
 -- Alter sequences owned by
 -- ----------------------------
 ALTER SEQUENCE "public"."lignes_commande_fournisseur_id_seq"
 OWNED BY "public"."lignes_commande_fournisseur"."id";
-SELECT setval('"public"."lignes_commande_fournisseur_id_seq"', 6, true);
+SELECT setval('"public"."lignes_commande_fournisseur_id_seq"', 28, true);
 
 -- ----------------------------
 -- Alter sequences owned by
 -- ----------------------------
 ALTER SEQUENCE "public"."mouvement_id_seq"
 OWNED BY "public"."mouvement"."id";
-SELECT setval('"public"."mouvement_id_seq"', 41, true);
+SELECT setval('"public"."mouvement_id_seq"', 50, true);
 
 -- ----------------------------
 -- Alter sequences owned by
@@ -369,14 +411,14 @@ SELECT setval('"public"."produit_id_seq"', 21, true);
 -- ----------------------------
 ALTER SEQUENCE "public"."produit_id_seq1"
 OWNED BY "public"."produit"."id";
-SELECT setval('"public"."produit_id_seq1"', 5, true);
+SELECT setval('"public"."produit_id_seq1"', 7, true);
 
 -- ----------------------------
 -- Alter sequences owned by
 -- ----------------------------
 ALTER SEQUENCE "public"."utilisateurs_id_seq"
 OWNED BY "public"."utilisateurs"."id";
-SELECT setval('"public"."utilisateurs_id_seq"', 6, true);
+SELECT setval('"public"."utilisateurs_id_seq"', 7, true);
 
 -- ----------------------------
 -- Primary Key structure for table CartonProduit
@@ -436,7 +478,7 @@ ALTER TABLE "public"."paiement" ADD CONSTRAINT "paiement_pkey" PRIMARY KEY ("id"
 -- ----------------------------
 -- Auto increment value for produit
 -- ----------------------------
-SELECT setval('"public"."produit_id_seq1"', 5, true);
+SELECT setval('"public"."produit_id_seq1"', 7, true);
 
 -- ----------------------------
 -- Primary Key structure for table produit

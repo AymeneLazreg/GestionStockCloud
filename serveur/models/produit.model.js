@@ -48,4 +48,5 @@ Categorie.hasMany(Produit, {
   as: 'produits',
 });
 
+
 export default Produit;

@@ -58,7 +58,7 @@ function AccueilGestionnaire() {
 
   return (
     <>
-      <Header title="Accueil Gestionnaire" />
+      <Header title="Accueil" />
 
       <div className="body">
         <div className="alertes-container">
@@ -86,6 +86,11 @@ function AccueilGestionnaire() {
         </Link>
         <Link to="/ajout-produit" className="btn">
           Ajout Rapide
+        </Link>
+        <Link to={"/liste-utilisateurs"} className="btn"
+        
+        >
+          Gerer les Roles
         </Link>
       </div>
 

@@ -1,5 +1,8 @@
 import { DataTypes, Sequelize } from 'sequelize';
 import sequelize from '../config/db.js';
+import Fournisseur from './fournisseur.model.js';       // ton modèle Fournisseur
+import LigneCommandeFournisseur from './ligneCommandeFournisseur.model.js';
+
 
 const CommandeFournisseur = sequelize.define('CommandeFournisseur', {
   id: {
@@ -39,5 +42,6 @@ const CommandeFournisseur = sequelize.define('CommandeFournisseur', {
   tableName: 'commandes_fournisseur',
   timestamps: false,
 });
+
 
 export default CommandeFournisseur;

@@ -10,6 +10,9 @@ import mouvementRoutes from './routes/mouvement.route.js';
 import commandeFournisseurRoutes from './routes/commandeFournisseur.routes.js'; // Assure-toi que le chemin est correct
 import ligneCommandeFournisseurRoutes from './routes/ligneCommandeFournisseur.routes.js';
 import './models/index.js'; // Assure-toi que le chemin est correct
+import bcrypt from 'bcryptjs';
+import User from './models/user.model.js'; // Assure-toi que le chemin est correct
+
 
 // Après l'import des modèles :
 Object.values(sequelize.models).forEach(model => {
@@ -17,6 +20,21 @@ Object.values(sequelize.models).forEach(model => {
     model.associate(sequelize.models);
   }
 });
+
+(async () => {
+  // 1. Hash du mot de passe par défaut
+  const pwdAdmin = await bcrypt.hash('admin', 10);
+
+  // 2. Création si pas déjà présent
+  await User.findOrCreate({
+    where: { email: 'admin@admin.com' },
+    defaults: {
+      nom:   'Super Admin',
+      mdp:   pwdAdmin,
+      role:  'Admin'
+    }
+  });
+})();
 
 dotenv.config();
 const app = express();

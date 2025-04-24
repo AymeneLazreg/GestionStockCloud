@@ -8,23 +8,64 @@ const {
 
 export const creerLigne = async (req, res) => {
   try {
-    const nouvelleLigne = await LigneCommandeFournisseur.create(req.body);
+    // 1) Extraction et normalisation des champs
+    const {
+      commande,
+      produit,
+      quantite,     // sans accent
+      quantité,     // avec accent
+      prix_unitaire
+    } = req.body;
 
-    // Recalculer le total
-    const lignes = await LigneCommandeFournisseur.findAll({
-      where: { commande: req.body.commande }
+    // Choix de la quantité : on préfère 'quantité' si défini, sinon 'quantite'
+    const qte = typeof quantité === 'number'
+      ? quantité
+      : quantite;
+
+    // 2) Vérification des données obligatoires
+    if (!commande || !produit || !qte || !prix_unitaire) {
+      return res.status(400).json({
+        success: false,
+        message: 'Données manquantes ou invalides'
+      });
+    }
+
+    // 3) Création de la ligne avec la bonne clé 'quantité'
+    const nouvelleLigne = await LigneCommandeFournisseur.create({
+      commande,
+      produit,
+      quantité: qte,
+      prix_unitaire
     });
-    const total = lignes
-      .reduce((sum, l) => sum + l.quantité * l.prix_unitaire, 0);
-    await CommandeFournisseur.update(
-      { montant_totale: total },
-      { where: { id: req.body.commande } }
+
+    // 4) Recalcul et mise à jour du montant total de la commande
+    const lignes = await LigneCommandeFournisseur.findAll({
+      where: { commande }
+    });
+
+    const total = lignes.reduce(
+      (sum, l) => sum + l.quantité * l.prix_unitaire,
+      0
     );
 
-    res.status(201).json(nouvelleLigne);
+    await CommandeFournisseur.update(
+      { montant_totale: total },
+      { where: { id: commande } }
+    );
+
+    // 5) Réponse
+    return res.status(201).json({
+      success: true,
+      data: nouvelleLigne
+    });
+
   } catch (error) {
     console.error('Erreur ajout ligne :', error);
-    res.status(500).json({ error: error.message });
+    return res.status(500).json({
+      success: false,
+      message: 'Erreur serveur',
+      error: error.message
+    });
   }
 };
 
@@ -38,9 +79,13 @@ export const getLignesParCommande = async (req, res) => {
         attributes: ['id', 'nom', 'prix']
       }]
     });
-    res.json(lignes);
+    return res.json(lignes);
   } catch (error) {
     console.error('Erreur récupération lignes :', error);
-    res.status(500).json({ error: error.message });
+    return res.status(500).json({
+      success: false,
+      message: 'Erreur serveur',
+      error: error.message
+    });
   }
 };
