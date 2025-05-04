@@ -2,7 +2,7 @@ import { Link } from "react-router-dom"
 import homeIcon from "../assets/icon.png"
 import commandeIcon from "../assets/calendar.png"
 import stockIcon from "../assets/folder.png"
-
+import { Home } from "lucide-react" // ✅ Importer l’icône maison
 const BarNavigation = () => {
   return (
     <div className="Bar"
@@ -20,8 +20,9 @@ const BarNavigation = () => {
       }}>
       {/* Utilisation de Link pour la navigation */}
       <Link to="/accueil-gestionnaire">
-        <img src={homeIcon || "/placeholder.svg"} className="menu-img" alt="Accueil" />
-      </Link>
+  <Home className="w-6 h-6 text-gray-700" />
+</Link>
+
       <Link to="/stock">
         <img src={stockIcon || "/placeholder.svg"} className="menu-img" alt="Stock" />
       </Link>

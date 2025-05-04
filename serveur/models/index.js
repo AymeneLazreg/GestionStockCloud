@@ -1,12 +1,13 @@
-// models/index.js
-
 import Sequelize from 'sequelize';
 import sequelize from '../config/db.js';
+import Mouvement from './mouvement.model.js';
 
 import Produit from './produit.model.js';
 import Fournisseur from './fournisseur.model.js';
 import CommandeFournisseur from './commandeFournisseur.model.js';
 import LigneCommandeFournisseur from './ligneCommandeFournisseur.model.js';
+import CommandeClient from './commandeClient.model.js';
+import LigneCommandeClient from './ligneCommandeClient.model.js';
 
 const db = {
   Sequelize,
@@ -14,42 +15,58 @@ const db = {
   Produit,
   Fournisseur,
   CommandeFournisseur,
-  LigneCommandeFournisseur
+  LigneCommandeFournisseur,
+  CommandeClient,
+  LigneCommandeClient,
+  Mouvement, // ✅ obligatoire
 };
 
-// === Associations ===
+// === Associations Fournisseur ===
 
-// Un fournisseur a plusieurs commandes
 db.Fournisseur.hasMany(db.CommandeFournisseur, {
   foreignKey: 'fournisseur',
-  as: 'commandes'           // alias unique
+  as: 'commandes'
 });
 
-// Chaque commande appartient à un fournisseur
 db.CommandeFournisseur.belongsTo(db.Fournisseur, {
   foreignKey: 'fournisseur',
-  as: 'fournisseurInfo'     // alias différent
+  as: 'fournisseurInfo'
 });
 
-// Une commande a plusieurs lignes
 db.CommandeFournisseur.hasMany(db.LigneCommandeFournisseur, {
   foreignKey: 'commande',
-  as: 'lignes'              // alias unique
+  as: 'lignes'
 });
 
-// Chaque ligne appartient à une commande
 db.LigneCommandeFournisseur.belongsTo(db.CommandeFournisseur, {
   foreignKey: 'commande',
-  as: 'commandeInfo'        // alias unique
+  as: 'commandeInfo'
 });
 
-// Chaque ligne réfère à un produit
 db.LigneCommandeFournisseur.belongsTo(db.Produit, {
   foreignKey: 'produit',
-  as: 'produitInfo'         // alias unique
+  as: 'produitInfo'
 });
 
-// (Optionnel) Si tu veux, tu peux aussi exposer
-// db.sequelize.sync() ici ou dans ton server.js
+// === Associations Client ===
+
+db.CommandeClient.hasMany(db.LigneCommandeClient, {
+  foreignKey: 'commande',
+  as: 'lignes'
+});
+
+db.LigneCommandeClient.belongsTo(db.CommandeClient, {
+  foreignKey: 'commande',
+  as: 'commandeInfo'
+});
+
+db.LigneCommandeClient.belongsTo(db.Produit, {
+  foreignKey: 'produit',
+  as: 'produitInfo'
+});
+db.Mouvement.belongsTo(db.Produit, {
+  foreignKey: 'produit',
+  as: 'produitInfo'
+});
 
 export default db;

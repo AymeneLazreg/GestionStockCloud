@@ -22,10 +22,16 @@ body {
   color: var(--text-color);
   background-color: var(--background-color);
   line-height: 1.5;
+  background-image: url('./LOGSTOCK.png'); /* ou '../assets/logo-bg.png' si dans src */
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain; /* ou cover selon l'effet voulu */
+  background-attachment: fixed;
 }
 
 /* Layout */
 .container {
+
   width: 100%;
   max-width: 1200px;
   margin: 0 auto;

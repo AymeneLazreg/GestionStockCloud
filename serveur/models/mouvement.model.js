@@ -11,7 +11,9 @@ const Mouvement = sequelize.define('mouvement', {
   produit: {
     type: DataTypes.STRING,
     allowNull: false
-  },
+  }
+  
+  ,
   action: {
     type: DataTypes.ENUM('Entrée', 'Sortie'),
     allowNull: false

@@ -24,11 +24,15 @@ const Produit = sequelize.define('produit', {
     type: DataTypes.INTEGER,
     allowNull: false,
   },
-  codebar: { // Nouvelle colonne codebar
+  codebar: {
     type: DataTypes.STRING,
-    allowNull: true, // Ou false si le code-barre est obligatoire
+    allowNull: true,
   },
-  categorie: { // Clé étrangère personnalisée
+  image: { // ✅ Ajouté ici
+    type: DataTypes.STRING,
+    allowNull: true,
+  },
+  categorie: {
     type: DataTypes.INTEGER,
     allowNull: false,
   },
@@ -40,13 +44,12 @@ const Produit = sequelize.define('produit', {
 // Associations
 Produit.belongsTo(Categorie, {
   foreignKey: 'categorie',
-  as: 'categorieAssoc', // alias pour éviter les conflits de nom
+  as: 'categorieAssoc',
 });
 
 Categorie.hasMany(Produit, {
   foreignKey: 'categorie',
   as: 'produits',
 });
-
 
 export default Produit;

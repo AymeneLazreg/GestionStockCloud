@@ -1,32 +1,46 @@
 import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
-import { NotificationProvider } from "./context/NotificationContext"; // 👈 AJOUT
+import { NotificationProvider } from "./context/NotificationContext";
+
 import CommandesClient from "./pages/client/CommandesClient";
 import HistoriqueCommandesClient from "./pages/client/HistoriqueCommandesClient";
-import AjoutProduitCommandeClient from "./pages/client/AjoutProduitCommandeClient";
+
 import NvCommandeClient from "./pages/client/NvCommandeClient";
+
+
 import CommandesFournisseur from "./pages/fournisseur/CommandesFournisseur";
 import HistoriqueCommandesFournisseur from "./pages/fournisseur/HistoriqueCommandesFournisseur";
 import NvCommandeFournisseur from "./pages/fournisseur/DetailsCommandeFournisseur";
+
 import Stock from "./pages/gestion/Stock";
 import HistoriqueStock from "./pages/gestion/HistoriqueStock";
 import HistoriqueProduit from "./pages/gestion/HistoriqueProduit";
 import AjoutProduit from "./pages/gestion/AjoutProduit";
+import ModifierProduit from "./pages/gestion/ModifierProduit";
+
 import AccueilGestionnaire from "./pages/gestionnaire/AccueilGestionnaire";
 import ListeProduits from "./pages/gestionnaire/ListeProduits";
+
 import Connection from "./pages/auth/Connection";
 import Profile from "./pages/auth/Profile";
-import Scanner from "./pages/utils/Scanner";
-import ModifierProduit from "./pages/gestion/ModifierProduit"; // adapte le chemin si besoin
 import ListeUtilisateurs from "./pages/auth/ListeUtilisateurs";
+import DetailsCommandeClient from "./pages/client/DetailsCommandeClient";
+import StatStock from "./pages/StatStock";
+
+
+
+
+
+import Scanner from "./pages/utils/Scanner";
 
 import "./App.css";
 
 function App() {
   return (
-    <NotificationProvider> {/* ✅ WRAPPER global */}
+    <NotificationProvider>
       <Router>
         <Routes>
-          {/* Pages d'authentification */}
+
+          {/* Authentification */}
           <Route path="/login" element={<Connection />} />
           <Route path="/profile" element={<Profile />} />
           <Route path="/liste-utilisateurs" element={<ListeUtilisateurs />} />
@@ -34,14 +48,15 @@ function App() {
           {/* Pages Client */}
           <Route path="/commandes-client" element={<CommandesClient />} />
           <Route path="/historique-commandes-client" element={<HistoriqueCommandesClient />} />
-          <Route path="/ajout-produit-commande-client" element={<AjoutProduitCommandeClient />} />
           <Route path="/nouvelle-commande-client" element={<NvCommandeClient />} />
+          <Route path="/details-commande-client/:id" element={<DetailsCommandeClient />} />
 
           {/* Pages Fournisseur */}
           <Route path="/commandes-fournisseur" element={<CommandesFournisseur />} />
           <Route path="/historique-commandes-fournisseur" element={<HistoriqueCommandesFournisseur />} />
           <Route path="/details-commande-fournisseur" element={<NvCommandeFournisseur />} />
           <Route path="/details-commande-fournisseur/:id" element={<NvCommandeFournisseur />} />
+
           {/* Pages Gestion */}
           <Route path="/stock" element={<Stock />} />
           <Route path="/historique-stock" element={<HistoriqueStock />} />
@@ -49,14 +64,15 @@ function App() {
           <Route path="/ajout-produit" element={<AjoutProduit />} />
           <Route path="/modifier-produit/:id" element={<ModifierProduit />} />
 
-
-          {/* Pages Gestionnaire */}
+          {/* Gestionnaire */}
           <Route path="/accueil-gestionnaire" element={<AccueilGestionnaire />} />
           <Route path="/liste-produits" element={<ListeProduits />} />
           <Route path="/scanner" element={<Scanner />} />
 
           {/* Redirection par défaut */}
           <Route path="/" element={<Navigate to="/login" replace />} />
+          <Route path="/stat-stock" element={<StatStock />} />
+
         </Routes>
       </Router>
     </NotificationProvider>

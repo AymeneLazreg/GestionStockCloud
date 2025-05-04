@@ -35,7 +35,23 @@ export default function Connection() {
             if (response.ok) {
                 console.log('Connexion réussie', data);
                 localStorage.setItem('token', data.token); // Sauvegarde du token
-                navigate("/accueil-gestionnaire");  // Redirection après connexion réussie
+
+                // 🔓 Décodage du token pour récupérer l'ID
+                const token = localStorage.getItem("token");
+                if (!token) throw new Error("Token manquant");
+                const payloadBase64 = token.split('.')[1];
+                const payload = JSON.parse(atob(payloadBase64));
+                const userRole = payload.role; 
+                console.log("Rôle utilisateur :", userRole);
+                if (userRole === "admin" || userRole === "gestionnaire") {
+                    navigate("/accueil-gestionnaire");  // Redirection après connexion réussie
+                }
+                else {
+                    navigate("/commandes-client");  // Redirection après connexion réussie
+                }
+
+
+
             } else {
                 const errorMessage = data.message || "Une erreur s'est produite lors de la connexion.";
                 setErrorMessage(errorMessage);
@@ -78,7 +94,7 @@ export default function Connection() {
                     email,
                     mdp: password, // ⚠️ doit être 'mdp' comme attendu par le backend
                     nom,
-                    role: "utilisateur", // ou 'admin' si besoin
+                    role: "client", // ou 'admin' si besoin
                 }),
             });
 
@@ -86,7 +102,8 @@ export default function Connection() {
 
             if (response.ok) {
                 console.log("Inscription réussie :", data);
-                navigate("/accueil-gestionnaire");
+                setActiveTab("login"); // Bascule sur l'onglet Connexion
+                setErrorMessage(""); // Nettoie le message d'erreur
             } else {
                 setErrorMessage(data.message || "Une erreur est survenue lors de l'inscription.");
             }
