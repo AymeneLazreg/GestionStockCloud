@@ -6,18 +6,11 @@ import Produit from '../models/produit.model.js';
 import authenticateToken from '../middleware/auth.js';
 import { Sequelize } from 'sequelize';
 import sequelize from '../config/db.js';
-import CommandeFournisseur from '../models/commandeFournisseur.model.js';
+import CommandeFournisseur from '../models/CommandeFournisseur.model.js';
 import LigneCommandeFournisseur from '../models/ligneCommandeFournisseur.model.js';
 
-
-
-
-
-
 const {
-  
   Fournisseur,
-  
 } = db;
 
 export const getCommandesFournisseur = async (req, res) => {
@@ -124,8 +117,6 @@ export const getHistoriqueCommandes = async (req, res) => {
     res.status(500).json({ error: error.message });
   }
 };
-
-
 
 export const validerCommande = [
   authenticateToken,

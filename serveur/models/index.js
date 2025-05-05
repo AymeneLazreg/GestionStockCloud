@@ -4,7 +4,7 @@ import Mouvement from './mouvement.model.js';
 
 import Produit from './produit.model.js';
 import Fournisseur from './fournisseur.model.js';
-import CommandeFournisseur from './commandeFournisseur.model.js';
+import CommandeFournisseur from './CommandeFournisseur.model.js';
 import LigneCommandeFournisseur from './ligneCommandeFournisseur.model.js';
 import CommandeClient from './commandeClient.model.js';
 import LigneCommandeClient from './ligneCommandeClient.model.js';

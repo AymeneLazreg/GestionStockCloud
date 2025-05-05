@@ -9,7 +9,7 @@ import {
   getHistoriqueCommandes
 } from '../controllers/CommandeFournisseur.controller.js';
 import LigneCommandeFournisseur from '../models/ligneCommandeFournisseur.model.js';
-import CommandeFournisseur from '../models/commandeFournisseur.model.js';
+import CommandeFournisseur from '../models/CommandeFournisseur.model.js';
 import authenticateToken from '../middleware/auth.js';
 
 const router = express.Router();
@@ -22,8 +22,6 @@ router.put(
   authenticateToken,
   validerCommande
 );
-
-
 
 // DELETE /api/commandes-fournisseur/:id
 router.delete("/:id", async (req, res) => {
@@ -45,7 +43,6 @@ router.delete("/:id", async (req, res) => {
     res.status(500).json({ success: false, message: "Erreur serveur" });
   }
 });
-
 
 router.post('/nouvelle',
   [ check('fournisseur').isInt().withMessage('ID fournisseur invalide') ],
