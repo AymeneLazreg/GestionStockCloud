@@ -15,7 +15,7 @@ function ModifierProduit() {
   useEffect(() => {
     const fetchProduit = async () => {
       try {
-        const res = await fetch(`http://localhost:8832/api/produits/${id}`);
+        const res = await fetch(`http://31.207.36.191:8832/api/produits/${id}`);
         if (!res.ok) throw new Error("Produit non trouvé");
         const data = await res.json();
         setProduit(data);
@@ -57,7 +57,7 @@ function ModifierProduit() {
       }
 
       
-        const res = await fetch(`http://localhost:8832/api/produits/${id}`, {
+        const res = await fetch(`http://31.207.36.191:8832/api/produits/${id}`, {
           method: "PUT",
           headers: {
             "Content-Type": "application/json",

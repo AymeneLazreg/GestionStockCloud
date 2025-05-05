@@ -27,9 +27,9 @@ function DetailsCommandeFournisseur() {
     const charger = async () => {
       try {
         const [r1, r2, r3] = await Promise.all([
-          fetch("http://localhost:8832/api/produits", { headers }),
-          fetch(`http://localhost:8832/api/commandes-fournisseur/${id}`, { headers }),
-          fetch(`http://localhost:8832/api/lignes-commande-fournisseur/${id}`, { headers })
+          fetch("http://31.207.36.191:8832/api/produits", { headers }),
+          fetch(`http://31.207.36.191:8832/api/commandes-fournisseur/${id}`, { headers }),
+          fetch(`http://31.207.36.191:8832/api/lignes-commande-fournisseur/${id}`, { headers })
         ]);
 
         if (r2.status === 401 || r3.status === 401) {
@@ -60,7 +60,7 @@ function DetailsCommandeFournisseur() {
   const reloadLignes = async () => {
     const token = getToken();
     const res = await fetch(
-      `http://localhost:8832/api/lignes-commande-fournisseur/${id}`,
+      `http://31.207.36.191:8832/api/lignes-commande-fournisseur/${id}`,
       { headers: { Authorization: `Bearer ${token}` } }
     );
     const data = await res.json();
@@ -72,7 +72,7 @@ function DetailsCommandeFournisseur() {
     const token = getToken();
     try {
       const res = await fetch(
-        `http://localhost:8832/api/commandes-fournisseur/${id}`,
+        `http://31.207.36.191:8832/api/commandes-fournisseur/${id}`,
         {
           method: "DELETE",
           headers: { Authorization: `Bearer ${token}` }
@@ -92,7 +92,7 @@ function DetailsCommandeFournisseur() {
     if (!produitChoisi) return;
     const token = getToken();
     try {
-      await fetch("http://localhost:8832/api/lignes-commande-fournisseur", {
+      await fetch("http://31.207.36.191:8832/api/lignes-commande-fournisseur", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -129,7 +129,7 @@ function DetailsCommandeFournisseur() {
 
     try {
       const res = await fetch(
-        `http://localhost:8832/api/commandes-fournisseur/${id}/valider`,
+        `http://31.207.36.191:8832/api/commandes-fournisseur/${id}/valider`,
         {
           method: "PUT",
           headers: {

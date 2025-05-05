@@ -24,7 +24,7 @@ function AjoutProduit() {
   useEffect(() => {
     const fetchCategories = async () => {
       try {
-        const res = await fetch("http://localhost:8832/api/categories");
+        const res = await fetch("http://31.207.36.191:8832/api/categories");
         const data = await res.json();
         setCategories(data);
         if (data.length > 0) {
@@ -66,7 +66,7 @@ function AjoutProduit() {
     if (imageFile) formData.append("image", imageFile);
 
     try {
-      const res = await fetch("http://localhost:8832/api/produits", {
+      const res = await fetch("http://31.207.36.191:8832/api/produits", {
         method: "POST",
         headers: {
           Authorization: `Bearer ${token}`,

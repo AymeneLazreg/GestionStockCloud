@@ -22,7 +22,7 @@ function HistoriqueStock() {
 
   const fetchHistorique = async () => {
     try {
-      const res = await axios.get("http://localhost:8832/api/mouvements", {
+      const res = await axios.get("http://31.207.36.191:8832/api/mouvements", {
         params: {
           dateDebut,
           dateFin,

@@ -30,7 +30,7 @@ function AccueilGestionnaire() {
   useEffect(() => {
     const fetchStats = async () => {
       try {
-        const res = await axios.get("http://localhost:8832/api/produits/stats");
+        const res = await axios.get("http://31.207.36.191:8832/api/produits/stats");
         setStats(res.data);
 
         // ✅ Affiche la notif UNE SEULE FOIS PAR SESSION

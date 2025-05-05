@@ -19,7 +19,7 @@ export default function Profile() {
         const fetchProfile = async () => {
             try {
                 const token = localStorage.getItem("token")
-                const response = await fetch("http://localhost:8832/api/user/profile", {
+                const response = await fetch("http://31.207.36.191:8832/api/user/profile", {
                     headers: {
                         Authorization: `Bearer ${token}`,
                     },
@@ -53,7 +53,7 @@ export default function Profile() {
     const handleSave = async () => {
         const token = localStorage.getItem("token")
         try {
-            const res = await fetch("http://localhost:8832/api/user/profile", {
+            const res = await fetch("http://31.207.36.191:8832/api/user/profile", {
                 method: "PUT",
                 headers: {
                     "Content-Type": "application/json",
@@ -86,7 +86,7 @@ export default function Profile() {
 
         try {
             const token = localStorage.getItem("token")
-            const res = await fetch("http://localhost:8832/api/user/password", {
+            const res = await fetch("http://31.207.36.191:8832/api/user/password", {
                 method: "PUT",
                 headers: {
                     "Content-Type": "application/json",

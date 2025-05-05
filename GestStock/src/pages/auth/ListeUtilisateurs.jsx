@@ -11,7 +11,7 @@ const ListeUtilisateurs = () => {
 
   const fetchUtilisateurs = async () => {
     try {
-      const res = await axios.get('http://localhost:8832/api/user/utilisateurs', {
+      const res = await axios.get('http://31.207.36.191:8832/api/user/utilisateurs', {
         headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
       });
       setUtilisateurs(res.data);
@@ -24,7 +24,7 @@ const ListeUtilisateurs = () => {
   const changerRole = async (id, nouveauRole) => {
     try {
       await axios.put(
-        `http://localhost:8832/api/user/utilisateurs/${id}`,
+        `http://31.207.36.191:8832/api/user/utilisateurs/${id}`,
         { role: nouveauRole },
         { headers: { Authorization: `Bearer ${localStorage.getItem('token')}` } }
       );

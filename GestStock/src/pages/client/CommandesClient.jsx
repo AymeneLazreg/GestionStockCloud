@@ -22,7 +22,7 @@ function CommandesClient() {
         console.log("ID utilisateur :", userId);
   
         // 1. Récupère toutes les commandes
-        const resCmd = await fetch("http://localhost:8832/api/commandes-client", {
+        const resCmd = await fetch("http://31.207.36.191:8832/api/commandes-client", {
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -39,7 +39,7 @@ function CommandesClient() {
         setCommandes(enCours);
   
         // 2. Récupère tous les produits dispo
-        const resProd = await fetch("http://localhost:8832/api/produits");
+        const resProd = await fetch("http://31.207.36.191:8832/api/produits");
         const dataProd = await resProd.json();
         setProduitsDispo(dataProd.filter(p => p.quantite_stock > 0));
       } catch (err) {
@@ -62,7 +62,7 @@ function CommandesClient() {
         const payload = JSON.parse(atob(payloadBase64));
         const userId = payload.id; 
 
-      const res = await fetch("http://localhost:8832/api/commandes-client/nouvelle", {
+      const res = await fetch("http://31.207.36.191:8832/api/commandes-client/nouvelle", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ client: userId })
@@ -122,7 +122,7 @@ function CommandesClient() {
               <div key={index} className="min-w-[200px] bg-white p-4 rounded shadow flex-shrink-0">
                 {prod.image && (
                   <img
-                    src={`http://localhost:8832/uploads/${prod.image}`}
+                    src={`http://31.207.36.191:8832/uploads/${prod.image}`}
                     alt={prod.nom}
                     className="w-full h-32 object-cover rounded mb-2"
                   />

@@ -20,9 +20,9 @@ function StatStock() {
     const chargerDonnees = async () => {
       try {
         const [resVentes, resTop, resStock] = await Promise.all([
-          fetch("http://localhost:8832/api/statistiques/ventes"),
-          fetch("http://localhost:8832/api/statistiques/top-produits"),
-          fetch("http://localhost:8832/api/statistiques/stock-alertes"),
+          fetch("http://31.207.36.191:8832/api/statistiques/ventes"),
+          fetch("http://31.207.36.191:8832/api/statistiques/top-produits"),
+          fetch("http://31.207.36.191:8832/api/statistiques/stock-alertes"),
         ]);
 
         const ventesData = await resVentes.json();

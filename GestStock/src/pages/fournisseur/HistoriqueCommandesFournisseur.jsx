@@ -19,7 +19,7 @@ export default function HistoriqueCommandesFournisseur() {
   const [modalLignes, setModalLignes] = useState([]);
 
   useEffect(() => {
-    fetch("http://localhost:8832/api/commandes-fournisseur/historique")
+    fetch("http://31.207.36.191:8832/api/commandes-fournisseur/historique")
       .then(res => res.ok ? res.json() : Promise.reject("Erreur historique"))
       .then(setCommandes)
       .catch(console.error)
@@ -33,7 +33,7 @@ export default function HistoriqueCommandesFournisseur() {
     setModalLignes([]);
 
     try {
-      const res = await fetch(`http://localhost:8832/api/commandes-fournisseur/${id}`);
+      const res = await fetch(`http://31.207.36.191:8832/api/commandes-fournisseur/${id}`);
       if (!res.ok) throw new Error("Erreur chargement détails");
       const json = await res.json();
       const details = json.data ?? json;

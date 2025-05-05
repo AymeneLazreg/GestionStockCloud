@@ -17,8 +17,8 @@ function DetailsCommandeClient() {
     const charger = async () => {
       try {
         const [pRes, cRes] = await Promise.all([
-          fetch("http://localhost:8832/api/produits"),
-          fetch(`http://localhost:8832/api/commandes-client/detail/${id}`)
+          fetch("http://31.207.36.191:8832/api/produits"),
+          fetch(`http://31.207.36.191:8832/api/commandes-client/detail/${id}`)
         ]);
 
         const produitsData = await pRes.json();
@@ -39,7 +39,7 @@ function DetailsCommandeClient() {
   const ajouterProduit = async () => {
     if (!selectedProduit || !quantite) return;
     try {
-      await fetch("http://localhost:8832/api/lignes-commande-client", {
+      await fetch("http://31.207.36.191:8832/api/lignes-commande-client", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -49,7 +49,7 @@ function DetailsCommandeClient() {
         }),
       });
 
-      const res = await fetch(`http://localhost:8832/api/commandes-client/detail/${id}`);
+      const res = await fetch(`http://31.207.36.191:8832/api/commandes-client/detail/${id}`);
       const data = await res.json();
       setCommande(data.data);
       setLignes(data.data?.lignes || []);
@@ -63,7 +63,7 @@ function DetailsCommandeClient() {
   const supprimerCommande = async () => {
     if (!window.confirm("Supprimer cette commande ?")) return;
     try {
-      await fetch(`http://localhost:8832/api/commandes-client/${id}`, {
+      await fetch(`http://31.207.36.191:8832/api/commandes-client/${id}`, {
         method: "DELETE"
       });
       navigate("/commandes-client");
@@ -74,7 +74,7 @@ function DetailsCommandeClient() {
 
   const validerCommande = async () => {
     try {
-      await fetch(`http://localhost:8832/api/commandes-client/${id}/valider`, {
+      await fetch(`http://31.207.36.191:8832/api/commandes-client/${id}/valider`, {
         method: "PUT"
       });
       navigate("/commandes-client");
@@ -120,7 +120,7 @@ function DetailsCommandeClient() {
                   >
                     {prod.image && (
                       <img
-                        src={`http://localhost:8832/uploads/${prod.image}`}
+                        src={`http://31.207.36.191:8832/uploads/${prod.image}`}
                         alt={prod.nom}
                         className="w-full h-28 object-cover rounded mb-2"
                       />

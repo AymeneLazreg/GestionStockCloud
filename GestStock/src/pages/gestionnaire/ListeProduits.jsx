@@ -13,7 +13,7 @@ function ListeProduits() {
   useEffect(() => {
     const fetchProduits = async () => {
       try {
-        const res = await axios.get("http://localhost:8832/api/produits");
+        const res = await axios.get("http://31.207.36.191:8832/api/produits");
         setProduits(res.data);
       } catch (err) {
         console.error("Erreur lors du chargement des produits:", err);

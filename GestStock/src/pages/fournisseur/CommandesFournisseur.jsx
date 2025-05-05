@@ -10,7 +10,7 @@ function CommandesFournisseur() {
   useEffect(() => {
     const fetchCommandes = async () => {
       try {
-        const res = await fetch("http://localhost:8832/api/commandes-fournisseur");
+        const res = await fetch("http://31.207.36.191:8832/api/commandes-fournisseur");
         if (!res.ok) throw new Error("Erreur serveur");
         const data = await res.json();
         setCommandes(data);
@@ -23,7 +23,7 @@ function CommandesFournisseur() {
 
   const handleNouvelle = async () => {
     try {
-      const res = await fetch("http://localhost:8832/api/commandes-fournisseur/nouvelle", {
+      const res = await fetch("http://31.207.36.191:8832/api/commandes-fournisseur/nouvelle", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ fournisseur: 1 })

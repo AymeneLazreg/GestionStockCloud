@@ -27,7 +27,7 @@ export default function HistoriqueCommandesClient() {
   const totalPages = Math.ceil(commandes.length / itemsPerPage);
   const validerCommande = async (commandeId) => {
     try {
-      const res = await fetch(`http://localhost:8832/api/commandes-client/valider/${commandeId}`, {
+      const res = await fetch(`http://31.207.36.191:8832/api/commandes-client/valider/${commandeId}`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
@@ -69,7 +69,7 @@ export default function HistoriqueCommandesClient() {
 
     const chargerCommandes = async () => {
       try {
-        const res = await fetch("http://localhost:8832/api/commandes-client");
+        const res = await fetch("http://31.207.36.191:8832/api/commandes-client");
         const data = await res.json();
         console.log("Commandes récupérées :", data);
 
@@ -107,7 +107,7 @@ export default function HistoriqueCommandesClient() {
     setModalLoading(true);
 
     try {
-      const res = await fetch(`http://localhost:8832/api/commandes-client/detail/${id}`);
+      const res = await fetch(`http://31.207.36.191:8832/api/commandes-client/detail/${id}`);
       const json = await res.json();
       const details = json.data ?? json;
       setSelectedDetails(details);

@@ -11,7 +11,7 @@ import CommandesFournisseur from "./pages/fournisseur/CommandesFournisseur";
 import HistoriqueCommandesFournisseur from "./pages/fournisseur/HistoriqueCommandesFournisseur";
 import NvCommandeFournisseur from "./pages/fournisseur/DetailsCommandeFournisseur";
 
-import Stock from "./pages/gestion/Stock";
+import Stock from "./pages/gestion/stock";
 import HistoriqueStock from "./pages/gestion/HistoriqueStock";
 import HistoriqueProduit from "./pages/gestion/HistoriqueProduit";
 import AjoutProduit from "./pages/gestion/AjoutProduit";
