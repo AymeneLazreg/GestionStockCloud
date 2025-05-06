@@ -224,36 +224,89 @@ function AjoutProduit() {
             display: flex;
             gap: 20px;
             justify-content: space-between;
+            flex-wrap: wrap;
           }
 
           .form-row .form-group {
-            flex: 1;
+            flex: 1 1 100%;
+          }
+
+          @media (min-width: 640px) {
+            .form-row .form-group {
+              flex: 1 1 45%;
+            }
           }
 
           .body {
             display: flex;
             justify-content: center;
-            align-items: center;
+            align-items: flex-start;
             min-height: 100vh;
             background-color: #f9f9f9;
             padding: 20px;
           }
 
+          .product-form {
+            width: 100%;
+            max-width: 600px;
+            background-color: #fff;
+            padding: 24px;
+            border-radius: 10px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+          }
+
+          .form-group {
+            margin-bottom: 16px;
+            display: flex;
+            flex-direction: column;
+          }
+
           .image-barcode-container {
             display: flex;
+            flex-wrap: wrap;
             justify-content: space-between;
             gap: 20px;
             margin-top: 20px;
           }
 
           .image-container, .barcode-container {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
+            flex: 1 1 100%;
+          }
+
+          @media (min-width: 640px) {
+            .image-container, .barcode-container {
+              flex: 1 1 48%;
+            }
           }
 
           .image-container input {
             margin-top: 5px;
+          }
+
+          .form-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 20px;
+          }
+
+          .form-buttons .btn {
+            flex: 1 1 48%;
+            padding: 12px;
+            font-size: 16px;
+            border-radius: 6px;
+            border: none;
+            cursor: pointer;
+          }
+
+          .submit-btn {
+            background-color: #28a745;
+            color: white;
+          }
+
+          .cancel-btn {
+            background-color: #dc3545;
+            color: white;
           }
         `}
       </style>

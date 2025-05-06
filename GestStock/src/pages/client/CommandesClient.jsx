@@ -84,7 +84,7 @@ function CommandesClient() {
       <div className="p-4">
         <h2 className="text-lg mb-4">Mes commandes</h2>
 
-        <div className="grid grid-cols-1 gap-4 mb-6">
+        <div className="grid grid-cols-1 gap-4 mb-6 max-w-[300px]">
           {commandes.map(cmd => (
             <div
               key={cmd.id}
@@ -117,9 +117,9 @@ function CommandesClient() {
         {/* ✅ Produits disponibles avec scroll horizontal */}
         <h3 className="text-lg mt-10 mb-2 font-bold">Produits disponibles</h3>
         <div className="overflow-x-auto">
-          <div className="flex gap-4 pb-4">
+          <div className="flex gap-4 pb-4 max-w-[800px]">
             {produitsDispo.map((prod, index) => (
-              <div key={index} className="min-w-[200px] bg-white p-4 rounded shadow flex-shrink-0">
+              <div key={index} className="min-w-[200px] bg-white p-4 rounded shadow flex-shrink-0 ">
                 {prod.image && (
                   <img
                     src={`http://31.207.36.191:8832/uploads/${prod.image}`}

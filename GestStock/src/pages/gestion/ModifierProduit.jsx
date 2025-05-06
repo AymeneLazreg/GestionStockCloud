@@ -136,7 +136,7 @@ function ModifierProduit() {
           </div>
           <div className="form-buttons">
             <button type="submit" className="btn submit-btn">Modifier</button>
-            <button type="button" className="btn cancel-btn" onClick={handleCancel}>Annuler</button>
+            <button type="button" className="btn cancel-btn" style={{marginBottom : "30px"}} onClick={handleCancel}>Annuler</button>
           </div>
         </form>
         
