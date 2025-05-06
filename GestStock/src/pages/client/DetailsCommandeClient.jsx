@@ -141,7 +141,7 @@ function DetailsCommandeClient() {
         <img
           src={`http://31.207.36.191:8832/uploads/${prod.image}`}
           alt={prod.nom}
-          className="w-full h-28 object-cover rounded mb-2"
+          className="w-full h-28 object-cover rounded mb-2 max-h-[200px] max-w-[200px]"
         />
       )}
       <h4 className="font-semibold">{prod.nom}</h4>
