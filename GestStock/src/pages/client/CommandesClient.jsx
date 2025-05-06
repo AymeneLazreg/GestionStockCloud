@@ -9,6 +9,12 @@ function CommandesClient() {
   const [produitsDispo, setProduitsDispo] = useState([]);
 
   useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (!token) {
+      alert("veuillez vous connecter.");
+      navigate("/login");
+      return;
+    }
     const fetchData = async () => {
       try {
         const token = localStorage.getItem("token");

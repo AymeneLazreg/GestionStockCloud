@@ -16,6 +16,13 @@ function DetailsCommandeClient() {
 
 
   useEffect(() => {
+
+    const token = localStorage.getItem("token");
+  if (!token) {
+    alert("veuillez vous connecter.");
+    navigate("/login");
+    return;
+  }
     const charger = async () => {
       try {
         const [pRes, cRes] = await Promise.all([

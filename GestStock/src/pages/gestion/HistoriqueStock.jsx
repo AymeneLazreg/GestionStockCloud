@@ -34,6 +34,12 @@ function HistoriqueStock() {
   };
 
   useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (!token) {
+      alert("veuillez vous connecter.");
+      navigate("/login");
+      return;
+    }
     fetchHistorique();
   }, []);
 

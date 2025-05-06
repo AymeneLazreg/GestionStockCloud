@@ -13,6 +13,12 @@ function ModifierProduit() {
   const [loading, setLoading] = useState(true); // Ajout du loading pour l'affichage du produit
 
   useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (!token) {
+      alert("veuillez vous connecter.");
+      navigate("/login");
+      return;
+    }
     const fetchProduit = async () => {
       try {
         const res = await fetch(`http://31.207.36.191:8832/api/produits/${id}`);

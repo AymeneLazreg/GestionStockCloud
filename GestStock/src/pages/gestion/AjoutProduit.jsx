@@ -22,6 +22,13 @@ function AjoutProduit() {
   const [imageFile, setImageFile] = useState(null);
 
   useEffect(() => {
+
+    const token = localStorage.getItem("token");
+    if (!token) {
+      alert("veuillez vous connecter.");
+      navigate("/login");
+      return;
+    }
     const fetchCategories = async () => {
       try {
         const res = await fetch("http://31.207.36.191:8832/api/categories");
