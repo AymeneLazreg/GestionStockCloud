@@ -56,7 +56,7 @@ app.use('/api/lignes-commande-client', ligneCommandeClientRoutes);
     defaults: {
       nom: 'Super Admin',
       mdp: pwdAdmin,
-      role: 'Admin'
+      role: 'admin'
     }
   });
 })();
